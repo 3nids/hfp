@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "qgsmapcanvas.h"
+#include "qgsmessagebar.h"
 
 namespace Ui {
   class MainWindow;
@@ -19,6 +20,8 @@ public:
 
 private:
   Ui::MainWindow *ui;
+  QgsMapCanvas* mMapCanvas;
+  QgsMessageBar* mInfoBar;
 };
 
 #endif // MAINWINDOW_H
