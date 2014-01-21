@@ -3,6 +3,7 @@
 // QT
 #include <QDebug>
 #include <QMessageBox>
+#include <QFile>
 
 // QGIS
 #include "qgsmaplayer.h"
@@ -14,6 +15,7 @@
 #include "project.h"
 
 class QgsMapLayerRegistry;
+class QgsVectorLayer;
 
 
 
@@ -23,12 +25,19 @@ Project::Project()
 
 bool Project::createEmptyProject(QString dbPath, int epsg)
 {
-  spatialite_init( 0 );
+
 
   sqlite3 *sqlite_handle;
 
+  // TODO: regarder la doc sinon retour sans ex!
+  spatialite_init_ex( sqlite_handle );
+
+  QFile* file = new QFile(dbPath);
+  if ( file->exists() )
+      file->remove();
+
   qDebug() << QString( "New sqlite connection for " ) << dbPath;
-  int rc = sqlite3_open_v2( dbPath.toUtf8().constData(), &sqlite_handle, SQLITE_OPEN_READWRITE, NULL );
+  int rc = sqlite3_open_v2( dbPath.toUtf8().constData(), &sqlite_handle, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL );
   if ( rc != SQLITE_OK )
   {
     // failure
@@ -40,21 +49,21 @@ bool Project::createEmptyProject(QString dbPath, int epsg)
 
   QStringList sqlCommands;
   // flightlines
-  sqlCommands.append( "create table flightline pkid integer primary key autoincrement id integer" );
-  sqlCommands.append( QString("select AddGeometryColumn(flightline,geometry,%1,Line,2)").arg( epsg ) );
-  sqlCommands.append( "select CreateSpatialIndex(flightline,geometry)" );
+  sqlCommands.append( "create table flightline (pkid integer primary key autoincrement, id integer)" );
+  sqlCommands.append( QString("select AddGeometryColumn('flightline','geometry',%1,'LINESTRING',2)").arg( epsg ) );
+  sqlCommands.append( "select CreateSpatialIndex('flightline','geometry')" );
 
   // flightline points
-  sqlCommands.append( "create table flightline_point pkid integer primary key autoincrement id_fl integer order integer type text value real calculated_height real height_uptodate integer");
-  sqlCommands.append( QString("select AddGeometryColumn(flightline_point,geometry,%1,Point,2)").arg( epsg ) );
-  sqlCommands.append( "select CreateSpatialIndex(flightline_point,geometry)" );
+  sqlCommands.append( "create table flightline_point (pkid integer primary key autoincrement, id_fl integer, \"order\" integer, type text, value real, calculated_height real, height_uptodate integer)");
+  sqlCommands.append( QString("select AddGeometryColumn(\"flightline_point\",\"geometry\",%1,\"POINT\",2)").arg( epsg ) );
+  sqlCommands.append( "select CreateSpatialIndex(\"flightline_point\",\"geometry\")" );
 
   // profiles
-  sqlCommands.append( "create table profile pkid integer primary key autoincrement id_fl integer order integer type text value real calculated_height real height_uptodate integer");
-  sqlCommands.append( QString("select AddGeometryColumn(flightline_point,geometry,%1,Point,2)").arg( epsg ) );
-  sqlCommands.append( "select AddGeometryColumn(flightline_point,geometry_height,0,Line,2)" );
-  sqlCommands.append( "select CreateSpatialIndex(flightline_point,geometry)" );
-  sqlCommands.append( "select CreateSpatialIndex(flightline_point,geometry_height)" );
+  sqlCommands.append( "create table profile (pkid integer primary key autoincrement)");
+  sqlCommands.append( QString("select AddGeometryColumn(\"flightline_point\",\"geometry\",%1,\"POINT\",2)").arg( epsg ) );
+  sqlCommands.append( "select AddGeometryColumn(\"flightline_point\",\"geometry_height\",0,\"LINESTRING\",2)" );
+  sqlCommands.append( "select CreateSpatialIndex(\"flightline_point\",\"geometry\")" );
+  sqlCommands.append( "select CreateSpatialIndex(\"flightline_point\",\"geometry_height\")" );
 
   char * errmsg;
   foreach (const QString &sql, sqlCommands)
@@ -90,21 +99,20 @@ bool Project::openProject( QString dbPath )
     return false;
   }
 
-  QList<QgsMapLayer *> myList;
+  QList<QgsMapLayer *> layerList;
 
   QStringList layerNames = QStringList() << "flightline" << "flightline_point" << "profile" ;
   foreach( const QString &layerName, layerNames )
   {
-    QgsVectorLayer *layer = new QgsVectorLayer( QString( "dbname='%1' table='%2'(geometry) sql=" )
-                                                .arg( dbPath.toUtf8().constData() )
-                                                .arg( layerName ),
-                                                "flightlines", "spatialite" );
-    if ( !layer->isValid() )
+    QString uri = QString( "dbname='%1' table='%2'(geometry) sql=" )
+            .arg( dbPath.toUtf8().constData() )
+            .arg( layerName );
+    layerList << new QgsVectorLayer( uri, "flightlines", "spatialite" );
+    if ( layerList.last()->isValid() )
     {
       QMessageBox::critical( 0, QObject::tr( "Invalid Layer" ), QObject::tr( "%1 is an invalid layer and cannot be loaded." ).arg( layerName ) );
       return false;
     }
-    myList << layer;
   }
 
   // also load profile height
@@ -113,7 +121,7 @@ bool Project::openProject( QString dbPath )
 
   //addMapLayers returns a list of all successfully added layers
   //so we compare that to our original list.
-  if ( myList == QgsMapLayerRegistry::instance()->addMapLayers( myList, false ) )
+  if ( layerList == QgsMapLayerRegistry::instance()->addMapLayers( layerList, false ) )
     return true;
   else
     return false;
