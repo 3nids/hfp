@@ -2,8 +2,11 @@
 
 
 #include <QGridLayout>
+#include <QSettings>
 
 #include "qgsmaplayerregistry.h"
+#include "qgsproviderregistry.h"
+#include "qgsvectorlayer.h"
 
 #include "mainwindow.h"
 #include "project.h"
@@ -17,6 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // create map layer registry if doesn't exist
   QgsMapLayerRegistry::instance();
+
+#if defined(Q_WS_MAC)
+  QString myPluginsDir        = "/Users/timsutton/apps/qgis.app/Contents/MacOS/lib/qgis";
+#else
+  QString myPluginsDir        = "/usr/local/lib/qgis/plugins/";
+#endif
+  QgsProviderRegistry::instance(myPluginsDir);
 
   QSettings settings;
 
@@ -43,11 +53,11 @@ MainWindow::MainWindow(QWidget *parent) :
   mInfoBar->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
   centralLayout->addWidget( mInfoBar, 0, 0, 1, 1 );
 
-  if ( Project::createEmptyProject( "test.sp3", 21781 ) )
+  QString filePath = "/home/denis/tmp2/test.sp3";
+  if ( Project::createEmptyProject( filePath, 21781 ) )
   {
-    Project::openProject("test.sp3");
+    Project::openProject( filePath );
   }
-
 
 
 }

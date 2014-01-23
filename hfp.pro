@@ -26,13 +26,14 @@ win32:CONFIG(release, debug|release): \
 else:win32:CONFIG(debug, debug|release): \
   LIBS += -L/$${QGISDIR}/lib/ -lqgis_core -lqgis_gui -lqgis_app
 
-else:unix: \
-  QGISDIR = /home/denis/Documents/Quantum-GIS \
-  QGISSRCDIR = /usr/include/qgis \
-  QGISLIBDIR = /usr/lib
-  LIBS += -L/$${QGISLIBDIR}/ -lqgis_core -lqgis_gui
 
-INCLUDEPATH += /usr/include/qgis/
+unix {
+  # sige: local, mac: rien
+  LIBS += -L/usr/local/lib/ -lqgis_core -lqgis_gui
+  LIBS += -L/usr/local/lib/qgis/plugins/ -lspatialiteprovider
+  INCLUDEPATH += /usr/local/include/qgis \
+                 /home/denis/opt/qgis/Quantum-GIS/src/providers/spatialite
+}
 
 DEFINES += GUI_EXPORT= CORE_EXPORT=
 
@@ -42,3 +43,4 @@ DEFINES += GUI_EXPORT= CORE_EXPORT=
 unix|win32: LIBS += -lsqlite3
 
 unix|win32: LIBS += -lspatialite
+
