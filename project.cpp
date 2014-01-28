@@ -70,6 +70,11 @@ bool Project::createEmptyProject(QString dbPath, int epsg)
   }
 
   QStringList sqlCommands;
+  // info
+
+  // rasters
+  sqlCommands.append( "create table 'rasters' (pkid integer primary key autoincrement, 'path' text, 'dtm' int)" );
+
   // flightlines
   sqlCommands.append( "create table 'flightline' (pkid integer primary key autoincrement, 'id' integer)" );
   sqlCommands.append( QString("select AddGeometryColumn('flightline','geometry',%1,'LINESTRING',2)").arg( epsg ) );
@@ -86,7 +91,6 @@ bool Project::createEmptyProject(QString dbPath, int epsg)
   sqlCommands.append( "create table profile (pkid integer primary key autoincrement, 'values' text)");
   sqlCommands.append( QString("select AddGeometryColumn('profile','geometry',%1,'POINT',2)").arg( epsg ) );
   sqlCommands.append( "select CreateSpatialIndex('profile','geometry')" );
-  sqlCommands.append( "select CreateSpatialIndex('profile','geometry_height')" );
 
   char * errmsg;
   foreach (const QString &sql, sqlCommands)
@@ -108,6 +112,13 @@ bool Project::createEmptyProject(QString dbPath, int epsg)
 bool Project::openProject( QString dbPath )
 {
   QList<QgsMapLayer *> layerList;
+
+  QList<QPair<QString,QString>> layerNames = QList<QPair<QString,QString>>()
+                                               << QPair("flightline","geometry")
+                                               << QPair("", "")
+                                               << QPair("", "")
+                                               << QPair("", "")
+                                               << QPair("", "")
 
   QStringList layerNames = QStringList() << "flightline" << "flightline_point" << "profile" ;
   foreach( const QString &layerName, layerNames )
