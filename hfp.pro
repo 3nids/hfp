@@ -13,10 +13,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    project.cpp
+    hlpproject.cpp
 
 HEADERS  += mainwindow.h \
-    project.h
+    project.h \
+    hlpproject.h
 
 FORMS    += mainwindow.ui
 
@@ -37,10 +38,14 @@ unix {
 
 DEFINES += GUI_EXPORT= CORE_EXPORT=
 
+RC_FILE = ./images/images.qrc
 
 #unix|win32: LIBS += -lqgis_core -lqgis_gui
 
 unix|win32: LIBS += -lsqlite3
 
 unix|win32: LIBS += -lspatialite
+
+RESOURCES += \
+    images/images.qrc
 

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>mActionPan.svg</file>
+    </qresource>
+</RCC>

@@ -9,7 +9,7 @@
 #include "qgsvectorlayer.h"
 
 #include "mainwindow.h"
-#include "project.h"
+#include "hlpproject.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -37,14 +37,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
   // "theMapCanvas" used to find this canonical instance later
   mMapCanvas = new QgsMapCanvas( centralWidget, "theMapCanvas" );
-  mMapCanvas->setWhatsThis( tr( "Map canvas. This is where raster and vector "
-                                "layers are displayed when added to the map" ) );
 
   // set canvas color right away
   int myRed = settings.value( "/qgis/default_canvas_color_red", 255 ).toInt();
   int myGreen = settings.value( "/qgis/default_canvas_color_green", 255 ).toInt();
   int myBlue = settings.value( "/qgis/default_canvas_color_blue", 255 ).toInt();
   mMapCanvas->setCanvasColor( QColor( myRed, myGreen, myBlue ) );
+
+  // configure canvas
+
 
   centralLayout->addWidget( mMapCanvas, 0, 0, 2, 1 );
 
@@ -54,9 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
   centralLayout->addWidget( mInfoBar, 0, 0, 1, 1 );
 
   QString filePath = "/home/denis/tmp2/test.sp3";
-  if ( Project::createEmptyProject( filePath, 21781 ) )
+  if ( HlpProject::createEmptyProject( filePath, 21781 ) )
   {
-    Project::openProject( filePath );
+    HlpProject* project = HlpProject::openProject( filePath );
   }
 
 
