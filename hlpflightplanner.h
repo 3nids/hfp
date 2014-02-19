@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef HLPFLIGHTPLANNER_H
+#define HLPFLIGHTPLANNER_H
 
 #include <QMainWindow>
 
@@ -12,15 +12,15 @@ namespace Ui {
   class MainWindow;
   }
 
-class MainWindow : public QMainWindow
+class HlpFlightPlannerApp : public QMainWindow
 {
   Q_OBJECT
 
 public:
   typedef QPair<QString, QString> HlpField;
 
-  explicit MainWindow(QWidget *parent = 0);
-  ~MainWindow();
+  explicit HlpFlightPlannerApp(QWidget *parent = 0);
+  ~HlpFlightPlannerApp();
 
   static QString createUri(QString geomType, QList<HlpField> fields, int epsg);
 
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif // MAINWINDOW_H
+#endif // HLPFLIGHTPLANNER_H

@@ -13,7 +13,7 @@
 #include "hlpproject.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
   initApp();
 }
 
-void MainWindow::initGui()
+void HlpFlightPlannerApp::initGui()
 {
 #if defined(Q_WS_MAC)
   QString myPluginsDir = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
@@ -58,7 +58,7 @@ void MainWindow::initGui()
   centralLayout->addWidget( mInfoBar, 0, 0, 1, 1 );
 }
 
-void MainWindow::initApp()
+void HlpFlightPlannerApp::initApp()
 {
   QSettings settings;
 
@@ -104,12 +104,12 @@ void MainWindow::initApp()
   mProject = HlpProject();
 }
 
-MainWindow::~MainWindow()
+HlpFlightPlannerApp::~HlpFlightPlannerApp()
 {
   delete ui;
 }
 
-QString MainWindow::createUri( QString geomType, QList<HlpField> fields, int epsg)
+QString HlpFlightPlannerApp::createUri( QString geomType, QList<HlpField> fields, int epsg)
 {
   QString uri = QString("%1?crs=%2").arg(geomType).arg(epsg);
   foreach( HlpField field, fields)
