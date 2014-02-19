@@ -11,7 +11,7 @@
 
 #include "hlpflightplannerapp.h"
 #include "hlpproject.h"
-#include "ui_mainwindow.h"
+#include "ui_hlpflightplanner.h"
 
 HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   QMainWindow(parent),
@@ -80,7 +80,6 @@ void HlpFlightPlannerApp::initApp()
   mFlightlineLayer = layerList.value("flightline");
   mProfileLayer = layerList.value("profile");
   mWaypointLayer = layerList.value("waypoint");
-
 
   // create empty project
   mProject = HlpProject();
