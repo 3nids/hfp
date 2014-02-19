@@ -1,5 +1,5 @@
-#ifndef HLPFLIGHTPLANNER_H
-#define HLPFLIGHTPLANNER_H
+#ifndef HLPFLIGHTPLANNERAPP_H
+#define HLPFLIGHTPLANNERAPP_H
 
 #include <QMainWindow>
 
@@ -41,4 +41,4 @@ private:
 
 };
 
-#endif // HLPFLIGHTPLANNER_H
+#endif // HLPFLIGHTPLANNERAPP_H

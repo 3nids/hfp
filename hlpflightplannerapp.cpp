@@ -9,7 +9,7 @@
 #include "qgsvectorlayer.h"
 #include "qgscoordinatereferencesystem.h"
 
-#include "mainwindow.h"
+#include "hlpflightplannerapp.h"
 #include "hlpproject.h"
 #include "ui_mainwindow.h"
 
@@ -71,34 +71,16 @@ void HlpFlightPlannerApp::initApp()
   mMapCanvas->mapRenderer()->setDestinationCrs( crs );
 
   // add the layers
-  QList<QgsMapLayer*> layerList;
-  QList<HlpField> fields;
-
-  // flightlines
-  fields = QList<HlpField>() << HlpField("pkid", "integer")
-                             << HlpField("number","integer")
-                             << HlpField("comment","text");
-  mFlightlineLayer = new QgsVectorLayer( createUri( "LineString", fields, epsg ), "Flight lines", "memory" );
-  layerList << mFlightlineLayer;
-
-  // profiles
-  fields = QList<HlpField>() << HlpField("pkid", "integer")
-                             << HlpField("values","text");
-  mProfileLayer = new QgsVectorLayer( createUri( "LineString", fields, epsg ), "Profiles", "memory" );
-  layerList << mProfileLayer;
-
-  // flightlines points
-  fields = QList<HlpField>() << HlpField("id_flightline", "integer")
-                             << HlpField("type","string")
-                             << HlpField("id_profile","integer")
-                             << HlpField("dz","double");
-  mWaypointLayer = new QgsVectorLayer( createUri( "Point", fields, epsg ), "Way points", "memory" );
-  layerList << mWaypointLayer;
-
-  if ( layerList != QgsMapLayerRegistry::instance()->addMapLayers( layerList, true, false ) )
+  QMap<QString, QgsMapLayer*> layerList = HlpProject::createLayers();
+  if (layerList.isEmpty())
   {
     // TODO: what?
+    return;
   }
+  mFlightlineLayer = layerList.value("flightline");
+  mProfileLayer = layerList.value("profile");
+  mWaypointLayer = layerList.value("waypoint");
+
 
   // create empty project
   mProject = HlpProject();
@@ -109,11 +91,4 @@ HlpFlightPlannerApp::~HlpFlightPlannerApp()
   delete ui;
 }
 
-QString HlpFlightPlannerApp::createUri( QString geomType, QList<HlpField> fields, int epsg)
-{
-  QString uri = QString("%1?crs=%2").arg(geomType).arg(epsg);
-  foreach( HlpField field, fields)
-   uri += QString("&field=%1:%2").arg(field.first).arg(field.second);
-  uri += "&index=yes";
-  return uri;
-}
+

@@ -12,12 +12,13 @@ TARGET = hfp
 TEMPLATE = app
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    hlpproject.cpp
+    hlpproject.cpp \
+    hlpflightplannerapp.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     project.h \
-    hlpproject.h
+    hlpproject.h \
+    hlpflightplannerapp.h
 
 FORMS    += mainwindow.ui
 
