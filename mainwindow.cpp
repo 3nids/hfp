@@ -7,6 +7,7 @@
 #include "qgsmaplayerregistry.h"
 #include "qgsproviderregistry.h"
 #include "qgsvectorlayer.h"
+#include "qgscoordinatereferencesystem.h"
 
 #include "mainwindow.h"
 #include "hlpproject.h"
@@ -18,13 +19,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  // create map layer registry if doesn't exist
-  QgsMapLayerRegistry::instance();
+  initGui();
+  initApp();
+}
 
+void MainWindow::initGui()
+{
 #if defined(Q_WS_MAC)
-  QString myPluginsDir        = "/Users/timsutton/apps/qgis.app/Contents/MacOS/lib/qgis";
+  QString myPluginsDir = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
 #else
-  QString myPluginsDir        = "/usr/local/lib/qgis/plugins/";
+  QString myPluginsDir = "/usr/local/lib/hlp/plugins/";
 #endif
   QgsProviderRegistry::instance(myPluginsDir);
 
@@ -39,13 +43,12 @@ MainWindow::MainWindow(QWidget *parent) :
   mMapCanvas = new QgsMapCanvas( centralWidget, "theMapCanvas" );
 
   // set canvas color right away
-  int myRed = settings.value( "/qgis/default_canvas_color_red", 255 ).toInt();
-  int myGreen = settings.value( "/qgis/default_canvas_color_green", 255 ).toInt();
-  int myBlue = settings.value( "/qgis/default_canvas_color_blue", 255 ).toInt();
+  int myRed = settings.value( "/hlp/default_canvas_color_red", 255 ).toInt();
+  int myGreen = settings.value( "/hlp/default_canvas_color_green", 255 ).toInt();
+  int myBlue = settings.value( "/hlp/default_canvas_color_blue", 255 ).toInt();
   mMapCanvas->setCanvasColor( QColor( myRed, myGreen, myBlue ) );
 
   // configure canvas
-
 
   centralLayout->addWidget( mMapCanvas, 0, 0, 2, 1 );
 
@@ -53,17 +56,64 @@ MainWindow::MainWindow(QWidget *parent) :
   mInfoBar = new QgsMessageBar( centralWidget );
   mInfoBar->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
   centralLayout->addWidget( mInfoBar, 0, 0, 1, 1 );
+}
 
-  QString filePath = "/home/denis/tmp2/test.sp3";
-  if ( HlpProject::createEmptyProject( filePath, 21781 ) )
+void MainWindow::initApp()
+{
+  QSettings settings;
+
+  // create map layer registry if doesn't exist
+  QgsMapLayerRegistry::instance();
+
+  // CRS
+  int epsg = settings.value( "/hlp/default_crs", 21781 ).toInt();
+  QgsCoordinateReferenceSystem crs = QgsCoordinateReferenceSystem( epsg, QgsCoordinateReferenceSystem::EpsgCrsId );
+  mMapCanvas->mapRenderer()->setDestinationCrs( crs );
+
+  // add the layers
+  QList<QgsMapLayer*> layerList;
+  QList<HlpField> fields;
+
+  // flightlines
+  fields = QList<HlpField>() << HlpField("pkid", "integer")
+                             << HlpField("number","integer")
+                             << HlpField("comment","text");
+  mFlightlineLayer = new QgsVectorLayer( createUri( "LineString", fields, epsg ), "Flight lines", "memory" );
+  layerList << mFlightlineLayer;
+
+  // profiles
+  fields = QList<HlpField>() << HlpField("pkid", "integer")
+                             << HlpField("values","text");
+  mProfileLayer = new QgsVectorLayer( createUri( "LineString", fields, epsg ), "Profiles", "memory" );
+  layerList << mProfileLayer;
+
+  // flightlines points
+  fields = QList<HlpField>() << HlpField("id_flightline", "integer")
+                             << HlpField("type","string")
+                             << HlpField("id_profile","integer")
+                             << HlpField("dz","double");
+  mWaypointLayer = new QgsVectorLayer( createUri( "Point", fields, epsg ), "Way points", "memory" );
+  layerList << mWaypointLayer;
+
+  if ( layerList != QgsMapLayerRegistry::instance()->addMapLayers( layerList, true, false ) )
   {
-    HlpProject* project = HlpProject::openProject( filePath );
+    // TODO: what?
   }
 
-
+  // create empty project
+  mProject = HlpProject();
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+}
+
+QString MainWindow::createUri( QString geomType, QList<HlpField> fields, int epsg)
+{
+  QString uri = QString("%1?crs=%2").arg(geomType).arg(epsg);
+  foreach( HlpField field, fields)
+   uri += QString("&field=%1:%2").arg(field.first).arg(field.second);
+  uri += "&index=yes";
+  return uri;
 }

@@ -7,28 +7,32 @@
 #include <spatialite.h>
 
 #include "qgsmaplayerregistry.h"
+#include "qgsvectorlayer.h"
 
 
 class HlpProject
 {
   public:
-    typedef QPair<QString, QString> HlpLayer;
-
-    HlpProject(QString projectPath);
-
-    static HlpProject* openProject( QString dbPath );
-
-    static bool createEmptyProject( QString dbPath, int epsg );
+    HlpProject();
 
     // access coordinate system info
-    int srsId(){ return mSrsId; }
-    void setSrdId( int srsId ){ mSrsId = srsId; }
+    int epsg(){ return mEpsg; }
+    void setEpsg( int epsg ){ mEpsg = epsg; }
 
 private:
-    QString mProjectPath;
-    int mSrsId;
+    QString mPath;
+    int mEpsg;
 
     bool readProperty(QString property, int &value);
+
+    QgsVectorLayer* mFightlineLayer;
+    QgsVectorLayer* mFlightlinecover;
+    QgsVectorLayer* mProfileLayer;
+    QList<QgsVectorLayer*> mRasterLayers;
+    QList<QgsVectorLayer*> mDtmLayers;
+    QgsVectorLayer* mPropertyLayer;
+
+
 };
 
 #endif // PROJECT_H
