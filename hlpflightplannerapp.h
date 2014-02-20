@@ -7,6 +7,7 @@
 #include "qgsmessagebar.h"
 
 #include "hlpproject.h"
+#include "hlpmapmanager.h"
 
 namespace Ui {
   class MainWindow;
@@ -33,6 +34,8 @@ private:
   QgsVectorLayer* mWaypointLayer;
 
   HlpProject mProject;
+  HlpMapManager* mMapManager;
+
 
 
 };

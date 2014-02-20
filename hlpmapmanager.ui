@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HlpMapManager</class>
+ <widget class="QDockWidget" name="HlpMapManager">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>409</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Map manager</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QToolButton" name="upButton">
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::UpArrow</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QToolButton" name="downButton">
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="arrowType">
+       <enum>Qt::DownArrow</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QToolButton" name="addButton">
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset resource="images/images.qrc">
+        <normaloff>:/images/plus.svg</normaloff>:/images/plus.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QToolButton" name="removeButton">
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset resource="images/images.qrc">
+        <normaloff>:/images/minus.svg</normaloff>:/images/minus.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="0" colspan="5">
+     <widget class="QListView" name="mapList">
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::InternalMove</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="images/images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -24,16 +24,28 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="mapNavToolBar">
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="mActionPan"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="docksToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="mActionMapManager"/>
+  </widget>
   <action name="mActionPan">
    <property name="checkable">
     <bool>true</bool>
@@ -44,6 +56,18 @@
    </property>
    <property name="text">
     <string>Pan</string>
+   </property>
+  </action>
+  <action name="mActionMapManager">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/images.qrc">
+     <normaloff>:/images/raster.svg</normaloff>:/images/raster.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Show map manager</string>
    </property>
   </action>
  </widget>

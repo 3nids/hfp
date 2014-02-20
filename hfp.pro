@@ -14,17 +14,20 @@ TEMPLATE = app
 SOURCES += main.cpp\
     hlpproject.cpp \
     hlpflightplannerapp.cpp \
-    hlpprojectprojectproperties.cpp
+    hlpprojectprojectproperties.cpp \
+    hlpmapmanager.cpp
 
 HEADERS  += \
     project.h \
     hlpproject.h \
     hlpflightplannerapp.h \
-    hlpprojectprojectproperties.h
+    hlpprojectprojectproperties.h \
+    hlpmapmanager.h
 
 FORMS    += \
     hlpprojectprojectproperties.ui \
-    hlpflightplanner.ui
+    hlpmapmanager.ui \
+    hlpflightplannerapp.ui
 
 win32:CONFIG(release, debug|release): \
   LIBS += -L/$${QGISDIR}/lib/ -lqgis_core -lqgis_gui -lqgis_app

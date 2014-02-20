@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/images">
         <file>mActionPan.svg</file>
+        <file>mActionAdd.svg</file>
+        <file>mActionRemove.svg</file>
+        <file>minus.svg</file>
+        <file>plus.svg</file>
+        <file>raster.svg</file>
     </qresource>
 </RCC>

@@ -11,14 +11,16 @@
 
 #include "hlpflightplannerapp.h"
 #include "hlpproject.h"
-#include "ui_hlpflightplanner.h"
+#include "hlpmapmanager.h"
+#include "ui_hlpflightplannerapp.h"
+
+
 
 HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-
   initGui();
   initApp();
 }
@@ -30,32 +32,32 @@ void HlpFlightPlannerApp::initGui()
 #else
   QString myPluginsDir = "/usr/local/lib/hlp/plugins/";
 #endif
-  QgsProviderRegistry::instance(myPluginsDir);
 
+  QgsProviderRegistry::instance(myPluginsDir);
   QSettings settings;
 
+  // Central widget
   QWidget *centralWidget = this->centralWidget();
   QGridLayout *centralLayout = new QGridLayout( centralWidget );
   centralWidget->setLayout( centralLayout );
   centralLayout->setContentsMargins( 0, 0, 0, 0 );
 
-  // "theMapCanvas" used to find this canonical instance later
+  // Map canvas
   mMapCanvas = new QgsMapCanvas( centralWidget, "theMapCanvas" );
-
-  // set canvas color right away
-  int myRed = settings.value( "/hlp/default_canvas_color_red", 255 ).toInt();
-  int myGreen = settings.value( "/hlp/default_canvas_color_green", 255 ).toInt();
-  int myBlue = settings.value( "/hlp/default_canvas_color_blue", 255 ).toInt();
-  mMapCanvas->setCanvasColor( QColor( myRed, myGreen, myBlue ) );
-
-  // configure canvas
-
+  mMapCanvas->setCanvasColor( QColor( 255, 255, 255 ) );
   centralLayout->addWidget( mMapCanvas, 0, 0, 2, 1 );
 
-  // a bar to warn the user with non-blocking messages
+  // Message bar
   mInfoBar = new QgsMessageBar( centralWidget );
   mInfoBar->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
   centralLayout->addWidget( mInfoBar, 0, 0, 1, 1 );
+
+  // Map manager
+  mMapManager = new HlpMapManager();
+  connect( ui->mActionMapManager, SIGNAL(toggled(bool)), mMapManager, SLOT(setVisible(bool)) );
+  connect( mMapManager->toggleViewAction(), SIGNAL(toggled(bool)), ui->mActionMapManager, SLOT(setChecked(bool)) );
+  addDockWidget( Qt::RightDockWidgetArea, mMapManager );
+
 }
 
 void HlpFlightPlannerApp::initApp()
