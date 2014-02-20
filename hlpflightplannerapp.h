@@ -17,12 +17,8 @@ class HlpFlightPlannerApp : public QMainWindow
   Q_OBJECT
 
 public:
-  typedef QPair<QString, QString> HlpField;
-
   explicit HlpFlightPlannerApp(QWidget *parent = 0);
   ~HlpFlightPlannerApp();
-
-  static QString createUri(QString geomType, QList<HlpField> fields, int epsg);
 
 private:
   void initGui();

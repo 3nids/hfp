@@ -30,7 +30,7 @@ HlpProject::HlpProject()
 QMap<QString, QgsMapLayer*> HlpProject::createLayers()
 {
   QSettings settings;
-  mEpsg = settings.value( "/hlp/default_crs", 21781 ).toInt();
+  int epsg = settings.value( "/hlp/default_crs", 21781 ).toInt();
 
   QMap<QString,QgsMapLayer*> layerList;
   QList<HlpField> fields;
@@ -53,7 +53,7 @@ QMap<QString, QgsMapLayer*> HlpProject::createLayers()
                              << HlpField("dz","double");
   layerList.insert("waypoint",  new QgsVectorLayer( createUri( "Point", fields, epsg ), "Way points", "memory" ) );
 
-  if ( layerList != QgsMapLayerRegistry::instance()->addMapLayers( layerList, true, false ) )
+  if ( layerList.values() != QgsMapLayerRegistry::instance()->addMapLayers( layerList.values(), true, false ) )
     return QMap<QString,QgsMapLayer*>();
 
   return layerList;

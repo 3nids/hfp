@@ -77,9 +77,9 @@ void HlpFlightPlannerApp::initApp()
     // TODO: what?
     return;
   }
-  mFlightlineLayer = layerList.value("flightline");
-  mProfileLayer = layerList.value("profile");
-  mWaypointLayer = layerList.value("waypoint");
+  mFlightlineLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("flightline") );
+  mProfileLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("profile") );
+  mWaypointLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("waypoint") );
 
   // create empty project
   mProject = HlpProject();

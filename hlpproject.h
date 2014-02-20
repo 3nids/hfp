@@ -10,6 +10,8 @@
 class HlpProject
 {
   public:
+    typedef QPair<QString, QString> HlpField;
+
     HlpProject();
 
     //! access coordinate system info
