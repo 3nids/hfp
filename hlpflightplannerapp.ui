@@ -32,6 +32,8 @@
     <bool>false</bool>
    </attribute>
    <addaction name="mActionPan"/>
+   <addaction name="mActionZoomIn"/>
+   <addaction name="mActionZoomOut"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="docksToolBar">
@@ -68,6 +70,24 @@
    </property>
    <property name="text">
     <string>Show map manager</string>
+   </property>
+  </action>
+  <action name="mActionZoomIn">
+   <property name="icon">
+    <iconset resource="images/images.qrc">
+     <normaloff>:/images/mActionZoomIn.svg</normaloff>:/images/mActionZoomIn.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom in</string>
+   </property>
+  </action>
+  <action name="mActionZoomOut">
+   <property name="icon">
+    <iconset resource="images/images.qrc">
+     <normaloff>:/images/mActionZoomOut.svg</normaloff>:/images/mActionZoomOut.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom out</string>
    </property>
   </action>
  </widget>

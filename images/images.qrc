@@ -6,5 +6,7 @@
         <file>minus.svg</file>
         <file>plus.svg</file>
         <file>raster.svg</file>
+        <file>mActionZoomOut.svg</file>
+        <file>mActionZoomIn.svg</file>
     </qresource>
 </RCC>

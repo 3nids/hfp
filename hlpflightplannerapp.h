@@ -23,7 +23,7 @@ class HlpFlightPlannerApp : public QMainWindow
 
   public slots:
     void setLayerSet(bool updateExtent);
-
+    void panMode();
 
   private:
     void initGui();
@@ -39,6 +39,8 @@ class HlpFlightPlannerApp : public QMainWindow
 
     HlpProject mProject;
     HlpMapManager* mMapManager;
+
+    QgsMapTool* mPanTool;
 
 
 

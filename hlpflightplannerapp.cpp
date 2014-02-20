@@ -8,6 +8,7 @@
 #include "qgsproviderregistry.h"
 #include "qgsvectorlayer.h"
 #include "qgscoordinatereferencesystem.h"
+#include "qgsmaptoolpan.h"
 
 #include "hlpflightplannerapp.h"
 #include "hlpproject.h"
@@ -16,6 +17,11 @@
 #include "ui_hlpflightplannerapp.h"
 
 
+
+HlpFlightPlannerApp::~HlpFlightPlannerApp()
+{
+  delete ui;
+}
 
 HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   QMainWindow(parent),
@@ -26,10 +32,10 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   initApp();
 
   // test
-  QgsRasterLayer *mypLayer = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1244");
-  HlpMapRegistry::instance()->addMapLayer(mypLayer);
-  QgsRasterLayer *mypLayer2 = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1264");
-  HlpMapRegistry::instance()->addMapLayer(mypLayer2);
+//  QgsRasterLayer *mypLayer = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1244");
+//  HlpMapRegistry::instance()->addMapLayer(mypLayer);
+//  QgsRasterLayer *mypLayer2 = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1264");
+//  HlpMapRegistry::instance()->addMapLayer(mypLayer2);
 }
 
 void HlpFlightPlannerApp::initGui()
@@ -64,6 +70,11 @@ void HlpFlightPlannerApp::initGui()
   connect( ui->mActionMapManager, SIGNAL(toggled(bool)), mMapManager, SLOT(setVisible(bool)) );
   connect( mMapManager->toggleViewAction(), SIGNAL(toggled(bool)), ui->mActionMapManager, SLOT(setChecked(bool)) );
   addDockWidget( Qt::LeftDockWidgetArea, mMapManager );
+
+  // Map tools
+  connect( ui->mActionPan, SIGNAL(triggered()), this, SLOT(panMode()));
+  mPanTool = new QgsMapToolPan(mMapCanvas);
+  mPanTool->setAction(ui->mActionPan);
 }
 
 void HlpFlightPlannerApp::initApp()
@@ -98,11 +109,6 @@ void HlpFlightPlannerApp::initApp()
 
 }
 
-HlpFlightPlannerApp::~HlpFlightPlannerApp()
-{
-  delete ui;
-}
-
 void HlpFlightPlannerApp::setLayerSet( bool updateExtent )
 {
   QList<QgsMapCanvasLayer> layers;
@@ -112,4 +118,9 @@ void HlpFlightPlannerApp::setLayerSet( bool updateExtent )
     mMapCanvas->zoomToFullExtent();
 }
 
+
+void HlpFlightPlannerApp::panMode()
+{
+  mMapCanvas->setMapTool(mPanTool);
+}
 
