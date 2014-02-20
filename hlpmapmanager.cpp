@@ -16,6 +16,9 @@ HlpMapManager::HlpMapManager(QWidget *parent) :
   ui(new Ui::HlpMapManager)
 {
   ui->setupUi(this);
+
+  ui->mapList->setModel( HlpMapRegistry::instance() );
+
   connect( ui->addButton, SIGNAL(clicked()), this, SLOT(addMap()) );
 }
 

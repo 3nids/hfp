@@ -87,7 +87,7 @@ void HlpFlightPlannerApp::initApp()
   mProject = HlpProject();
 
 
-  // layers
+  // layers registries
   connect( HlpMapRegistry::instance(), SIGNAL(layersChanged()), this, SLOT(setLayerSet()) );
 
 }
