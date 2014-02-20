@@ -48,6 +48,18 @@
    </attribute>
    <addaction name="mActionMapManager"/>
   </widget>
+  <widget class="QToolBar" name="editToolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="mActionAddProfile"/>
+  </widget>
   <action name="mActionPan">
    <property name="checkable">
     <bool>true</bool>
@@ -88,6 +100,18 @@
    </property>
    <property name="text">
     <string>Zoom out</string>
+   </property>
+  </action>
+  <action name="mActionAddProfile">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="images/images.qrc">
+     <normaloff>:/images/profile.svg</normaloff>:/images/profile.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Add profile</string>
    </property>
   </action>
  </widget>

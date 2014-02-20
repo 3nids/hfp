@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   height="24"
+   width="24"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="plane.svg">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1207"
+     inkscape:window-height="858"
+     id="namedview7"
+     showgrid="false"
+     inkscape:zoom="7.1762366"
+     inkscape:cx="5.3505619"
+     inkscape:cy="17.984612"
+     inkscape:window-x="2224"
+     inkscape:window-y="87"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <g
+     id="layer1"
+     transform="matrix(0.04112524,0.03450818,-0.03450818,0.04112524,7.1195175,-13.652123)"
+     style="fill:#fe0000;fill-opacity:1;stroke:#3d4148;stroke-width:13.63454628;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none">
+    <path
+       id="rect3052"
+       d="m 385.17,19.606 c -12.956,0 -19.174,42.81 -21.377,62.881 -0.45814,6.0887 -0.97291,11.62 -0.97291,17.301 v 60.503 c -0.13431,3.447 -0.73266,4.4038 -2.7242,6.1388 l -46.715,40.696 c -3.1876,2.2042 -7.3352,2.1224 -7.018,-5.4535 v -5.4088 c 0,-2.9806 -2.3835,-5.4088 -5.3641,-5.4088 h -6.7051 c -2.9806,0 -5.4088,2.4282 -5.4088,5.4088 v 31.72 c 0.0157,0.9701 -0.15769,1.0512 -0.84818,1.6652 l -44.299,39.387 c -4.5365,3.158 -6.1986,0.0596 -6.4369,-5.4982 v -9.8788 c 0,-2.9806 -2.3835,-5.4088 -5.3641,-5.4088 h -6.7051 c -2.9806,0 -5.4088,2.4282 -5.4088,5.4088 v 32.855 c -0.003,0.41191 -0.17177,0.45043 -0.35881,0.66367 l -47.5,40.99 c -3.0254,3.8715 -4.8184,5.639 -4.6936,12.203 l -0.16908,18.425 c -0.38261,2.5077 1.9576,3.506 3.6011,2.7174 0,0 81.135,-50.093 112.25,-63.828 31.118,-13.735 72.594,-23.155 72.594,-23.155 3.1984,-0.77396 6.0579,-0.86459 7.2862,2.5479 v 138.61 c 0.0822,16.545 6.3324,26.555 0,32.497 l -51.723,50.269 c -3.1409,3.3487 -4.9535,6.212 -5.3209,11.623 l 0.0775,5.7259 c 0.17422,2.6789 1.1804,4.0556 3.6345,3.7399 l 66.157,-16.266 c 1.7351,-0.54805 3.1136,-0.36124 4.3312,1.3216 l 6.7566,14.884 8.3025,-15.269 c 1.147,-1.6353 3.3026,-2.4137 4.9265,-1.8312 20.407,4.8326 40.813,9.6652 61.22,14.498 2.6255,0.31568 4.754,0.26075 5.0902,-3.2619 v -8.7427 c -1.3742,-6.0307 -4.8403,-8.8403 -8.4759,-12.469 l -51.929,-44.221 c -4.8577,-4.9235 -0.0429,-15.323 1.6092,-32.006 v -137.01 l 0.0446,-0.0446 h 0.0446 v -0.0446 h 0.0446 v -0.0446 h 0.0446 v -0.0446 h 0.0446 c 0.0402,-0.19235 0.0865,-0.39686 0.13403,-0.58111 0.0473,-0.18425 0.1233,-0.36115 0.1788,-0.53641 0.0555,-0.17527 0.11458,-0.32632 0.1788,-0.4917 0.0642,-0.16539 0.10499,-0.33709 0.1788,-0.49171 0.0738,-0.15461 0.13918,-0.30406 0.22351,-0.447 0.0842,-0.1429 0.17275,-0.27191 0.2682,-0.40231 0.0954,-0.13045 0.20549,-0.24064 0.3129,-0.3576 0.10743,-0.11701 0.23745,-0.25499 0.35761,-0.35761 0.12015,-0.1027 0.22391,-0.18079 0.3576,-0.2682 0.13374,-0.0874 0.29902,-0.19691 0.44701,-0.2682 0.148,-0.0712 0.28391,-0.12459 0.447,-0.1788 0.16308,-0.0544 0.35743,-0.0978 0.53641,-0.13403 0.17897,-0.0363 0.34078,-0.0718 0.5364,-0.0894 0.19564,-0.0176 0.41274,-0.003 0.62581,0 0.21308,10e-4 0.43921,0.022 0.67051,0.0446 0.2313,0.0226 0.4649,0.0453 0.71521,0.0894 0.25031,0.0441 37.656,8.1667 69.42,21.59 31.764,13.4233 116.47,64.122 116.47,64.122 1.9402,0.39708 3.5766,0.10198 3.8233,-1.8005 v -17.129 c 0.11215,-4.595 -2.6072,-8.6787 -4.6042,-10.505 l -46.496,-41.14 c -1.6018,-1.9478 -1.959,-2.322 -2.0036,-3.4734 v -32.54 c 0,-2.9806 -2.4282,-5.4088 -5.4088,-5.4088 h -6.7051 c -2.9806,0 -5.3641,2.4282 -5.3641,5.4088 v 9.8788 c 0.52057,5.8772 -1.0437,8.0537 -4.6936,5.2747 l -45.61,-39.17 c -1.0202,-0.87224 -1.2586,-0.91239 -1.2459,-1.7629 v -31.625 c 0,-2.9806 -2.4282,-5.4088 -5.4088,-5.4088 h -6.7051 c -2.9806,0 -5.3641,2.4282 -5.3641,5.4088 v 5.4088 c 0.75793,7.533 -4.1895,9.0425 -7.5097,5.4088 l -46.401,-40.749 c -2.1631,-1.9524 -2.3669,-3.1493 -2.5904,-5.8752 v -60.668 c -0.14,-5.991 -0.46,-12.717 -1.12,-18.194 -2.7,-21.249 -10.94,-67.101 -21.18,-61.981 z"
+       inkscape:connector-curvature="0"
+       style="fill:#fe0000;fill-opacity:1;fill-rule:evenodd;stroke:#3d4148;stroke-width:13.63454628;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>plane</dc:title>
+        <dc:date>2011-07-03T14:46:05</dc:date>
+        <dc:description>Será que quis dizer: silhueta de avião\nTradução de Português para Inglês\nsilhouette plane</dc:description>
+        <dc:source>http://openclipart.org/detail/148135/plane-by-voyeg3r</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>voyeg3r</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>jet</rdf:li>
+            <rdf:li>plane</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

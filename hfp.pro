@@ -16,7 +16,9 @@ SOURCES += main.cpp\
     hlpflightplannerapp.cpp \
     hlpprojectprojectproperties.cpp \
     hlpmapmanager.cpp \
-    hlpmapregistry.cpp
+    hlpmapregistry.cpp \
+    hlpaddprofile.cpp \
+    hlpmaptooledit.cpp
 
 HEADERS  += \
     project.h \
@@ -24,12 +26,14 @@ HEADERS  += \
     hlpflightplannerapp.h \
     hlpprojectprojectproperties.h \
     hlpmapmanager.h \
-    hlpmapregistry.h
+    hlpmapregistry.h \
+    hlpaddprofile.h \
+    hlpmaptooledit.h
 
 FORMS    += \
-    hlpprojectprojectproperties.ui \
-    hlpmapmanager.ui \
-    hlpflightplannerapp.ui
+    ui/hlpprojectprojectproperties.ui \
+    ui/hlpmapmanager.ui \
+    ui/hlpflightplannerapp.ui
 
 win32:CONFIG(release, debug|release): \
   LIBS += -L/$${QGISDIR}/lib/ -lqgis_core -lqgis_gui -lqgis_app

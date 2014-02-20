@@ -8,5 +8,7 @@
         <file>raster.svg</file>
         <file>mActionZoomOut.svg</file>
         <file>mActionZoomIn.svg</file>
+        <file>plane.svg</file>
+        <file>profile.svg</file>
     </qresource>
 </RCC>
