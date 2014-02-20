@@ -10,31 +10,35 @@
 #include "hlpmapmanager.h"
 
 namespace Ui {
-  class MainWindow;
+  class HlpFlightPlannerApp;
   }
 
 class HlpFlightPlannerApp : public QMainWindow
 {
   Q_OBJECT
 
-public:
-  explicit HlpFlightPlannerApp(QWidget *parent = 0);
-  ~HlpFlightPlannerApp();
+  public:
+    explicit HlpFlightPlannerApp(QWidget *parent = 0);
+    ~HlpFlightPlannerApp();
 
-private:
-  void initGui();
-  void initApp();
+  public slots:
+    void setLayerSet();
 
-  Ui::MainWindow *ui;
-  QgsMapCanvas* mMapCanvas;
-  QgsMessageBar* mInfoBar;
 
-  QgsVectorLayer* mFlightlineLayer;
-  QgsVectorLayer* mProfileLayer;
-  QgsVectorLayer* mWaypointLayer;
+  private:
+    void initGui();
+    void initApp();
 
-  HlpProject mProject;
-  HlpMapManager* mMapManager;
+    Ui::HlpFlightPlannerApp *ui;
+    QgsMapCanvas* mMapCanvas;
+    QgsMessageBar* mInfoBar;
+
+    QgsVectorLayer* mFlightlineLayer;
+    QgsVectorLayer* mProfileLayer;
+    QgsVectorLayer* mWaypointLayer;
+
+    HlpProject mProject;
+    HlpMapManager* mMapManager;
 
 
 

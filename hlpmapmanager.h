@@ -11,12 +11,15 @@ class HlpMapManager : public QDockWidget
 {
   Q_OBJECT
 
-public:
-  explicit HlpMapManager(QWidget *parent = 0);
-  ~HlpMapManager();
+  public:
+    explicit HlpMapManager(QWidget *parent = 0);
+    ~HlpMapManager();
 
-private:
-  Ui::HlpMapManager *ui;
+  public slots:
+    void addMap();
+
+  private:
+    Ui::HlpMapManager *ui;
 };
 
 #endif // HLPMAPMANAGER_H

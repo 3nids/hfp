@@ -15,14 +15,16 @@ SOURCES += main.cpp\
     hlpproject.cpp \
     hlpflightplannerapp.cpp \
     hlpprojectprojectproperties.cpp \
-    hlpmapmanager.cpp
+    hlpmapmanager.cpp \
+    hlpmapregistry.cpp
 
 HEADERS  += \
     project.h \
     hlpproject.h \
     hlpflightplannerapp.h \
     hlpprojectprojectproperties.h \
-    hlpmapmanager.h
+    hlpmapmanager.h \
+    hlpmapregistry.h
 
 FORMS    += \
     hlpprojectprojectproperties.ui \
@@ -39,9 +41,9 @@ else:win32:CONFIG(debug, debug|release): \
 unix {
   # sige: local, mac: rien
   LIBS += -L/usr/local/lib/ -lqgis_core -lqgis_gui
-  LIBS += -L/usr/local/lib/qgis/plugins/ -lspatialiteprovider
+  LIBS += -L/usr/local/lib/qgis/plugins/ -lgdalprovider
   INCLUDEPATH += /usr/local/include/qgis \
-                 /home/denis/opt/qgis/Quantum-GIS/src/providers/spatialite
+                 /home/denis/opt/qgis/Quantum-GIS/src/providers/gdal
 }
 
 DEFINES += GUI_EXPORT= CORE_EXPORT=

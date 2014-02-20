@@ -12,13 +12,14 @@
 #include "hlpflightplannerapp.h"
 #include "hlpproject.h"
 #include "hlpmapmanager.h"
+#include "hlpmapregistry.h"
 #include "ui_hlpflightplannerapp.h"
 
 
 
 HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   QMainWindow(parent),
-  ui(new Ui::MainWindow)
+  ui(new Ui::HlpFlightPlannerApp)
 {
   ui->setupUi(this);
   initGui();
@@ -30,10 +31,10 @@ void HlpFlightPlannerApp::initGui()
 #if defined(Q_WS_MAC)
   QString myPluginsDir = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
 #else
-  QString myPluginsDir = "/usr/local/lib/hlp/plugins/";
+  QString myPluginsDir = "/usr/local/lib/qgis/plugins/";
 #endif
-
   QgsProviderRegistry::instance(myPluginsDir);
+
   QSettings settings;
 
   // Central widget
@@ -53,11 +54,10 @@ void HlpFlightPlannerApp::initGui()
   centralLayout->addWidget( mInfoBar, 0, 0, 1, 1 );
 
   // Map manager
-  mMapManager = new HlpMapManager();
+  mMapManager = new HlpMapManager( this );
   connect( ui->mActionMapManager, SIGNAL(toggled(bool)), mMapManager, SLOT(setVisible(bool)) );
   connect( mMapManager->toggleViewAction(), SIGNAL(toggled(bool)), ui->mActionMapManager, SLOT(setChecked(bool)) );
-  addDockWidget( Qt::RightDockWidgetArea, mMapManager );
-
+  addDockWidget( Qt::LeftDockWidgetArea, mMapManager );
 }
 
 void HlpFlightPlannerApp::initApp()
@@ -85,11 +85,24 @@ void HlpFlightPlannerApp::initApp()
 
   // create empty project
   mProject = HlpProject();
+
+
+  // layers
+  connect( HlpMapRegistry::instance(), SIGNAL(layersChanged()), this, SLOT(setLayerSet()) );
+
 }
 
 HlpFlightPlannerApp::~HlpFlightPlannerApp()
 {
   delete ui;
+}
+
+void HlpFlightPlannerApp::setLayerSet()
+{
+  QList<QgsMapCanvasLayer> layers;
+  layers.append( HlpMapRegistry::instance()->layers() );
+  mMapCanvas->setLayerSet( layers );
+  mMapCanvas->zoomToFullExtent();
 }
 
 
