@@ -22,7 +22,7 @@ class HlpFlightPlannerApp : public QMainWindow
     ~HlpFlightPlannerApp();
 
   public slots:
-    void setLayerSet();
+    void setLayerSet(bool updateExtent);
 
 
   private:

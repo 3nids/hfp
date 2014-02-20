@@ -27,7 +27,7 @@ bool HlpMapRegistry::addMapLayer( QgsRasterLayer *layer )
     mMaps.insert( 0, QgsMapCanvasLayer( layer, true ) );
     QModelIndex index = createIndex( 0, 0 );
     emit dataChanged( index, index );
-    emit layersChanged();
+    emit layersChanged( true );
     return true;
   }
   return false;
@@ -74,12 +74,12 @@ bool HlpMapRegistry::setData(const QModelIndex &index, const QVariant &value, in
   if ( role == Qt::CheckStateRole && index.row() >= 0 && index.row() <= mMaps.count() )
   {
     mMaps[index.row()].setVisible( value == Qt::Checked );
-    emit layersChanged();
+    emit layersChanged( false );
   }
   return true;
 }
 
 Qt::ItemFlags HlpMapRegistry::flags(const QModelIndex &index) const
 {
-  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled | Qt::ItemIsUserCheckable;
+  return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable;
 }

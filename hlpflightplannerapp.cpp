@@ -24,6 +24,12 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   ui->setupUi(this);
   initGui();
   initApp();
+
+  // test
+  QgsRasterLayer *mypLayer = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1244");
+  HlpMapRegistry::instance()->addMapLayer(mypLayer);
+  QgsRasterLayer *mypLayer2 = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1264");
+  HlpMapRegistry::instance()->addMapLayer(mypLayer2);
 }
 
 void HlpFlightPlannerApp::initGui()
@@ -88,7 +94,7 @@ void HlpFlightPlannerApp::initApp()
 
 
   // layers registries
-  connect( HlpMapRegistry::instance(), SIGNAL(layersChanged()), this, SLOT(setLayerSet()) );
+  connect( HlpMapRegistry::instance(), SIGNAL(layersChanged(bool)), this, SLOT(setLayerSet(bool)) );
 
 }
 
@@ -97,12 +103,13 @@ HlpFlightPlannerApp::~HlpFlightPlannerApp()
   delete ui;
 }
 
-void HlpFlightPlannerApp::setLayerSet()
+void HlpFlightPlannerApp::setLayerSet( bool updateExtent )
 {
   QList<QgsMapCanvasLayer> layers;
   layers.append( HlpMapRegistry::instance()->layers() );
   mMapCanvas->setLayerSet( layers );
-  mMapCanvas->zoomToFullExtent();
+  if ( updateExtent )
+    mMapCanvas->zoomToFullExtent();
 }
 
 

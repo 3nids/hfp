@@ -20,7 +20,7 @@ class HlpMapRegistry : public QAbstractListModel
     QList<QgsMapCanvasLayer> layers();
 
   signals:
-    void layersChanged();
+    void layersChanged( bool updateExtent );
 
   public slots:
 
