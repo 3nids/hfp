@@ -9,6 +9,7 @@ QT       += core gui xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = hfp
+
 TEMPLATE = app
 
 SOURCES += main.cpp\
@@ -21,7 +22,6 @@ SOURCES += main.cpp\
     hlpmaptooledit.cpp
 
 HEADERS  += \
-    project.h \
     hlpproject.h \
     hlpflightplannerapp.h \
     hlpprojectprojectproperties.h \
@@ -36,9 +36,13 @@ FORMS    += \
     ui/hlpflightplannerapp.ui
 
 win32:CONFIG(release, debug|release): {
-  LIBS += -LC:\OSGeo4W\apps\qgis-dev\lib\ -lqgis_core -lqgis_gui
-  LIBS += -LC:\OSGeo4W\apps\qgis-dev\plugins\ -lgdalprovider
-  INCLUDEPATH += -LC:\OSGeo4W\apps\qgis-dev\include
+  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\lib\\ -lqgis_core -lqgis_gui
+  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\plugins\\ -lgdalprovider
+  INCLUDEPATH += C:\\OSGeo4W\\apps\\qgis-dev\\include
+  # cross compilation include
+  INCLUDEPATH += /usr/local/include/qgis
+  INCLUDEPATH += /usr/include/
+  INCLUDEPATH += /usr/include/x86_64-linux-gnu/ # if stubs-32.h is missing: sudo apt-get install libc6-dev-i386
 }
 
 unix {
