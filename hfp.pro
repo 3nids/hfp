@@ -35,30 +35,22 @@ FORMS    += \
     ui/hlpmapmanager.ui \
     ui/hlpflightplannerapp.ui
 
-win32:CONFIG(release, debug|release): \
-  LIBS += -L/$${QGISDIR}/lib/ -lqgis_core -lqgis_gui -lqgis_app
-
-else:win32:CONFIG(debug, debug|release): \
-  LIBS += -L/$${QGISDIR}/lib/ -lqgis_core -lqgis_gui -lqgis_app
-
+win32:CONFIG(release, debug|release): {
+  LIBS += -LC:\OSGeo4W\apps\qgis-dev\lib\ -lqgis_core -lqgis_gui
+  LIBS += -LC:\OSGeo4W\apps\qgis-dev\plugins\ -lgdalprovider
+  INCLUDEPATH += -LC:\OSGeo4W\apps\qgis-dev\include
+}
 
 unix {
   # sige: local, mac: rien
   LIBS += -L/usr/local/lib/ -lqgis_core -lqgis_gui
   LIBS += -L/usr/local/lib/qgis/plugins/ -lgdalprovider
-  INCLUDEPATH += /usr/local/include/qgis \
-                 /home/denis/opt/qgis/Quantum-GIS/src/providers/gdal
+  INCLUDEPATH += /usr/local/include/qgis
 }
 
 DEFINES += GUI_EXPORT= CORE_EXPORT=
 
 RC_FILE = ./images/images.qrc
-
-#unix|win32: LIBS += -lqgis_core -lqgis_gui
-
-unix|win32: LIBS += -lsqlite3
-
-unix|win32: LIBS += -lspatialite
 
 RESOURCES += \
     images/images.qrc
