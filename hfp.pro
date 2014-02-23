@@ -13,22 +13,24 @@ TARGET = hfp
 TEMPLATE = app
 
 SOURCES += main.cpp\
-    hlpproject.cpp \
-    hlpflightplannerapp.cpp \
-    hlpprojectprojectproperties.cpp \
-    hlpmapmanager.cpp \
-    hlpmapregistry.cpp \
-    hlpaddprofile.cpp \
-    hlpmaptooledit.cpp
+    core/hlpproject.cpp \
+    core/hlpmapregistry.cpp \
+    app/hlpflightplannerapp.cpp \
+    gui/hlpprojectprojectproperties.cpp \
+    gui/hlpmapmanager.cpp \
+    maptools/hlpaddprofile.cpp \
+    maptools/hlpmaptooledit.cpp \
+    maptools/hlpmaptoolcatpure.cpp
 
 HEADERS  += \
-    hlpproject.h \
-    hlpflightplannerapp.h \
-    hlpprojectprojectproperties.h \
-    hlpmapmanager.h \
-    hlpmapregistry.h \
-    hlpaddprofile.h \
-    hlpmaptooledit.h
+    core/hlpproject.h \
+    core/hlpmapregistry.h \
+    app/hlpflightplannerapp.h \
+    gui/hlpprojectprojectproperties.h \
+    gui/hlpmapmanager.h \
+    maptools/hlpaddprofile.h \
+    maptools/hlpmaptooledit.h \
+    maptools/hlpmaptoolcatpure.h
 
 FORMS    += \
     ui/hlpprojectprojectproperties.ui \
