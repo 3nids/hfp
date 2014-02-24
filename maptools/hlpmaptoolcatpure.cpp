@@ -168,7 +168,7 @@ void HlpMapToolCapture::stopCapturing()
 
 #ifdef Q_OS_WIN
   // hope your wearing your peril sensitive sunglasses.
-  QgisApp::instance()->skipNextContextMenuEvent();
+  HlpFlightPlannerApp::instance()->skipNextContextMenuEvent();
 #endif
 
   mCapturing = false;

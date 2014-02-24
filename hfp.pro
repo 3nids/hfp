@@ -38,14 +38,29 @@ FORMS    += \
     ui/hlpflightplannerapp.ui
 
 win32:CONFIG(release, debug|release): {
-  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\lib\\ -lqgis_core -lqgis_gui
-  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\plugins\\ -lgdalprovider
+  LIBS += -LC:\\OSGeo4W\\lib -lQtCore4 -lQtGui4
+  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\lib -lqgis_core -lqgis_gui
+  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\plugins -lgdalprovider
+  INCLUDEPATH += C:\\OSGeo4W\\include
+  DEPENDPATH += C:\\OSGeo4W\\include
   INCLUDEPATH += C:\\OSGeo4W\\apps\\qgis-dev\\include
+  DEPENDPATH += C:\\OSGeo4W\\apps\\qgis-dev\\include
   # cross compilation include
   INCLUDEPATH += /usr/local/include/qgis
   INCLUDEPATH += /usr/include/
   INCLUDEPATH += /usr/include/x86_64-linux-gnu/ # if stubs-32.h is missing: sudo apt-get install libc6-dev-i386
 }
+else:win32:CONFIG(debug, debug|release)
+{
+  LIBS += -LC:\\OSGeo4W\\lib -lQtCore4d -lQtGui4d
+  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\lib -lqgis_core -lqgis_gui
+  LIBS += -LC:\\OSGeo4W\\apps\\qgis-dev\\plugins -lgdalprovider
+  INCLUDEPATH += C:\\OSGeo4W\\include
+  DEPENDPATH += C:\\OSGeo4W\\include
+  INCLUDEPATH += C:\\OSGeo4W\\apps\\qgis-dev\\include
+  DEPENDPATH += C:\\OSGeo4W\\apps\\qgis-dev\\include
+}
+
 
 unix {
   # sige: local, mac: rien
@@ -60,4 +75,7 @@ RC_FILE = ./images/images.qrc
 
 RESOURCES += \
     images/images.qrc
+
+
+
 
