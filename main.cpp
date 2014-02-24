@@ -1,5 +1,6 @@
-#include "hlpflightplannerapp.h"
 #include <QApplication>
+
+#include "app/hlpflightplannerapp.h"
 
 int main(int argc, char *argv[])
 {
