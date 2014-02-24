@@ -1,8 +1,19 @@
+#include <QKeyEvent>
+#include <QStatusBar>
+
+
+#include "qgscursors.h"
+#include "qgsmapcanvas.h"
+
+#include "../app/hlpflightplannerapp.h"
+
 #include "hlpmaptoolcatpure.h"
 
-HlpMapToolCapture::HlpMapToolCapture(QgsMapCanvas* canvas, QgsVectorLayer* profileLayer) :
+
+
+HlpMapToolCapture::HlpMapToolCapture(QgsMapCanvas* canvas, QgsVectorLayer *layer) :
   HlpMapToolEdit(canvas)
-  , mLayer( profileLayer )
+  , mLayer( layer )
 {
   mCapturing = false;
 
@@ -16,7 +27,7 @@ HlpMapToolCapture::~HlpMapToolCapture()
   stopCapturing();
 }
 
-void HlpAddProfile::deactivate()
+void HlpMapToolCapture::deactivate()
 {
   HlpMapToolEdit::deactivate();
 }
@@ -195,22 +206,9 @@ void HlpMapToolCapture::validateGeometry()
 
   QgsGeometry *g = 0;
 
-  switch ( mCaptureMode )
-  {
-    case CaptureNone:
-    case CapturePoint:
-      return;
-    case CaptureLine:
-      if ( mCaptureList.size() < 2 )
-        return;
-      g = QgsGeometry::fromPolyline( mCaptureList.toVector() );
-      break;
-    case CapturePolygon:
-      if ( mCaptureList.size() < 3 )
-        return;
-      g = QgsGeometry::fromPolygon( QgsPolygon() << ( QgsPolyline() << mCaptureList.toVector() << mCaptureList[0] ) );
-      break;
-  }
+  if ( mCaptureList.size() < 2 )
+    return;
+  g = QgsGeometry::fromPolyline( mCaptureList.toVector() );
 
   if ( !g )
     return;
@@ -220,7 +218,7 @@ void HlpMapToolCapture::validateGeometry()
   connect( mValidator, SIGNAL( finished() ), this, SLOT( validationFinished() ) );
   mValidator->start();
 
-  QStatusBar *sb = QgisApp::instance()->statusBar();
+  QStatusBar *sb = HlpFlightPlannerApp::instance()->statusBar();
   sb->showMessage( tr( "Validation started." ) );
 }
 
@@ -248,7 +246,7 @@ void HlpMapToolCapture::addError( QgsGeometry::Error e )
     mGeomErrorMarkers << vm;
   }
 
-  QStatusBar *sb = QgisApp::instance()->statusBar();
+  QStatusBar *sb = HlpFlightPlannerApp::instance()->statusBar();
   sb->showMessage( e.what() );
   if ( !mTip.isEmpty() )
     sb->setToolTip( mTip );
@@ -256,6 +254,6 @@ void HlpMapToolCapture::addError( QgsGeometry::Error e )
 
 void HlpMapToolCapture::validationFinished()
 {
-  QStatusBar *sb = QgisApp::instance()->statusBar();
+  QStatusBar *sb = HlpFlightPlannerApp::instance()->statusBar();
   sb->showMessage( tr( "Validation finished." ) );
 }

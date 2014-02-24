@@ -6,8 +6,9 @@
 
 #include "qgsrasterlayer.h"
 
-#include "hlpmapmanager.h"
-#include "hlpmapregistry.h"
+#include "../core/hlpmapregistry.h"
+#include "../gui/hlpmapmanager.h"
+
 #include "ui_hlpmapmanager.h"
 
 

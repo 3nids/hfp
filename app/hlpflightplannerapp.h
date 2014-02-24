@@ -6,8 +6,8 @@
 #include "qgsmapcanvas.h"
 #include "qgsmessagebar.h"
 
-#include "hlpproject.h"
-#include "hlpmapmanager.h"
+#include "../core/hlpproject.h"
+#include "../gui/hlpmapmanager.h"
 
 namespace Ui {
   class HlpFlightPlannerApp;
@@ -18,6 +18,8 @@ class HlpFlightPlannerApp : public QMainWindow
   Q_OBJECT
 
   public:
+    static HlpFlightPlannerApp *instance() { return mInstance; }
+
     explicit HlpFlightPlannerApp(QWidget *parent = 0);
     ~HlpFlightPlannerApp();
 
@@ -26,6 +28,8 @@ class HlpFlightPlannerApp : public QMainWindow
     void panMode();
 
   private:
+    static HlpFlightPlannerApp* mInstance;
+
     void initGui();
     void initApp();
 

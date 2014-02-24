@@ -6,6 +6,7 @@
 
 class QgsRubberBand;
 class QKeyEvent;
+class QgsMapCanvas;
 
 /**Base class for map tools that edit vector geometry*/
 class HlpMapToolEdit: public QgsMapTool

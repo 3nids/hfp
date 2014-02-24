@@ -10,13 +10,16 @@
 #include "qgscoordinatereferencesystem.h"
 #include "qgsmaptoolpan.h"
 
+#include "../core/hlpproject.h"
+#include "../core/hlpmapregistry.h"
+#include "../gui/hlpmapmanager.h"
+
 #include "hlpflightplannerapp.h"
-#include "hlpproject.h"
-#include "hlpmapmanager.h"
-#include "hlpmapregistry.h"
+
 #include "ui_hlpflightplannerapp.h"
 
 
+HlpFlightPlannerApp *HlpFlightPlannerApp::mInstance = 0;
 
 HlpFlightPlannerApp::~HlpFlightPlannerApp()
 {
@@ -30,6 +33,7 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   ui->setupUi(this);
   initGui();
   initApp();
+  mInstance = this;
 
   // test
 //  QgsRasterLayer *mypLayer = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1244");

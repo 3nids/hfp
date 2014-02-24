@@ -1,8 +1,17 @@
+
+#include <QMouseEvent>
+#include <QMessageBox>
+
+#include "qgsmapcanvas.h"
+
+
 #include "hlpaddprofile.h"
 
+
+
+
 HlpAddProfile::HlpAddProfile(QgsMapCanvas* canvas, QgsVectorLayer* profileLayer) :
-  HlpMapToolCapture(canvas)
-  , mLayer( profileLayer )
+  HlpMapToolCapture(canvas, profileLayer)
 {
 }
 
@@ -12,13 +21,7 @@ HlpAddProfile::~HlpAddProfile()
 }
 
 
-bool HlpAddProfile::addFeature( QgsFeature *f )
-{
-  QgsFeatureAction action( tr( "add feature" ), *f, mLayer, -1, -1, this );
-  return action.addFeature();
-}
-
-void QgsMapToolAddFeature::activate()
+void HlpAddProfile::activate()
 {
   if ( !mCanvas || mCanvas->isDrawing() )
   {
@@ -28,7 +31,7 @@ void QgsMapToolAddFeature::activate()
   QgsMapTool::activate();
 }
 
-void QgsMapToolAddFeature::canvasReleaseEvent( QMouseEvent * e )
+void HlpAddProfile::canvasReleaseEvent( QMouseEvent * e )
 {
   //add point to list and to rubber band
   if ( e->button() == Qt::LeftButton )
@@ -69,14 +72,17 @@ void QgsMapToolAddFeature::canvasReleaseEvent( QMouseEvent * e )
     f->setGeometry( g );
     mLayer->beginEditCommand( tr( "Feature added" ) );
 
-    if ( addFeature( vlayer, f ) )
+    // TODO add feature
+    bool ok = true;
+
+    if ( ok )
     {
-      vlayer->endEditCommand();
+      mLayer->endEditCommand();
     }
     else
     {
       delete f;
-      vlayer->destroyEditCommand();
+      mLayer->destroyEditCommand();
     }
 
     stopCapturing();
