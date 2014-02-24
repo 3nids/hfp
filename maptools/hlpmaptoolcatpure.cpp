@@ -4,6 +4,7 @@
 
 #include "qgscursors.h"
 #include "qgsmapcanvas.h"
+#include "qgsvectorlayer.h"
 
 #include "../app/hlpflightplannerapp.h"
 
