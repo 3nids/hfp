@@ -3,6 +3,7 @@
 
 #include "qgsmaptool.h"
 #include "qgsrubberband.h"
+#include "qgsmessagebaritem.h"
 
 class QgsRubberBand;
 class QKeyEvent;
@@ -19,7 +20,7 @@ class HlpMapToolEdit: public QgsMapTool
 
   protected:
     /**keeps trace of last displayed message*/
-    QgsMessageBarItem * mMessageItem;
+    QgsMessageBarItem* mMessageItem;
 
     /** Creates a rubber band with the color/line width from
     *   the QGIS settings. The caller takes ownership of the

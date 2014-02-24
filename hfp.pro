@@ -61,7 +61,6 @@ else:win32:CONFIG(debug, debug|release)
   DEPENDPATH += C:\\OSGeo4W\\apps\\qgis-dev\\include
 }
 
-
 unix {
   # sige: local, mac: rien
   LIBS += -L/usr/local/lib/ -lqgis_core -lqgis_gui
@@ -71,10 +70,7 @@ unix {
 
 DEFINES += GUI_EXPORT= CORE_EXPORT=
 
-RC_FILE = ./images/images.qrc
-
-RESOURCES += \
-    images/images.qrc
+RESOURCES += images/images.qrc
 
 
 
