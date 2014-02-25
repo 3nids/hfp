@@ -3,6 +3,7 @@
 
 #include "qgsmaptool.h"
 #include "qgsrubberband.h"
+#include "qgsmessagebaritem.h"
 
 class QgsRubberBand;
 class QKeyEvent;

@@ -4,6 +4,7 @@
 
 #include "qgscursors.h"
 #include "qgsmapcanvas.h"
+#include "qgsvectorlayer.h"
 
 #include "../app/hlpflightplannerapp.h"
 
@@ -168,7 +169,8 @@ void HlpMapToolCapture::stopCapturing()
 
 #ifdef Q_OS_WIN
   // hope your wearing your peril sensitive sunglasses.
-  QgisApp::instance()->skipNextContextMenuEvent();
+  // todo
+  //HlpFlightPlannerApp::instance()->skipNextContextMenuEvent();
 #endif
 
   mCapturing = false;
