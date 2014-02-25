@@ -49,12 +49,12 @@ win32:CONFIG(Release, Debug|Release) {
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_gui
 }
 else:win32:CONFIG(Debug, Debug|Release) {
-#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtCore4.lib
-#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtGui4.lib
-#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtXml4.lib
-  LIBS += -L"C:/OSGeo4W/lib/" -lQtCore4
-  LIBS += -L"C:/OSGeo4W/lib/" -lQtGui4
-  LIBS += -L"C:/OSGeo4W/lib/" -lQtXml4
+  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtCored4.lib
+  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtGuid4.lib
+  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtXmld4.lib
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtCored4
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtGuid4
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtXmld4
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_core
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_gui
 }
