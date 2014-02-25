@@ -17,20 +17,20 @@ SOURCES += main.cpp\
     core/hlpmapregistry.cpp \
     app/hlpflightplannerapp.cpp \
     gui/hlpprojectprojectproperties.cpp \
-    gui/hlpmapmanager.cpp \
-    maptools/hlpaddprofile.cpp \
-    maptools/hlpmaptooledit.cpp \
-    maptools/hlpmaptoolcatpure.cpp
+    gui/hlpmapmanager.cpp #\
+#    maptools/hlpaddprofile.cpp \
+#    maptools/hlpmaptooledit.cpp \
+#    maptools/hlpmaptoolcatpure.cpp
 
 HEADERS  += \
     core/hlpproject.h \
     core/hlpmapregistry.h \
     app/hlpflightplannerapp.h \
     gui/hlpprojectprojectproperties.h \
-    gui/hlpmapmanager.h \
-    maptools/hlpaddprofile.h \
-    maptools/hlpmaptooledit.h \
-    maptools/hlpmaptoolcatpure.h
+    gui/hlpmapmanager.h# \
+#    maptools/hlpaddprofile.h \
+#    maptools/hlpmaptooledit.h \
+#    maptools/hlpmaptoolcatpure.h
 
 FORMS    += \
     ui/hlpprojectprojectproperties.ui \
@@ -62,20 +62,11 @@ FORMS    += \
 #}
 
 win32 {
-#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtCore4.lib
-#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtGui4.lib
-#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtXml4.lib
-
-  PRE_TARGETDEPS += C:/OSGeo4W/apps/qgis-dev/lib/qgis_core.lib
-  PRE_TARGETDEPS += C:/OSGeo4W/apps/qgis-dev/lib/qgis_gui.lib
-
   LIBS += -L"C:/OSGeo4W/lib/" -lQtCore4
   LIBS += -L"C:/OSGeo4W/lib/" -lQtGui4
   LIBS += -L"C:/OSGeo4W/lib/" -lQtXml4
-
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_core
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_gui
-
   INCLUDEPATH += C:/OSGeo4W/include
   DEPENDPATH += C:/OSGeo4W/include
   INCLUDEPATH += C:/OSGeo4W/apps/qgis-dev/include
