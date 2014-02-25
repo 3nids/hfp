@@ -1,0 +1,8 @@
+
+
+
+
+Install osgeo4w: qgis, libqgis, qt libs
+
+Install Microsoft Visual studio 2008
+
