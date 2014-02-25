@@ -1,5 +1,5 @@
-#ifndef HLPAMAPTOOLCATPURE_H
-#define HLPAMAPTOOLCATPURE_H
+#ifndef HLPMAPTOOLCATPURE_H
+#define HLPMAPTOOLCATPURE_H
 
 #include "qgsgeometryvalidator.h"
 #include "qgsvectorlayer.h"
@@ -79,4 +79,4 @@ class HlpMapToolCapture : public HlpMapToolEdit
     QList< QgsVertexMarker * > mGeomErrorMarkers;
 };
 
-#endif // HLPAMAPTOOLCATPURE_H
+#endif // HLPMAPTOOLCATPURE_H
