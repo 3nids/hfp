@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include <QSettings>
 
+#include "qgsapplication.h"
 #include "qgsmaplayerregistry.h"
 #include "qgsproviderregistry.h"
 #include "qgsvectorlayer.h"
@@ -45,11 +46,18 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
 void HlpFlightPlannerApp::initGui()
 {
 #if defined(Q_WS_MAC)
-  QString myPluginsDir = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
+  QString pluginPath = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
+#elif defined(Q_WS_WIN)
+  QString pluginPath = "/usr/local/lib/qgis/plugins/";
+  QString prefixPath = "/usr/local";
 #else
-  QString myPluginsDir = "/usr/local/lib/qgis/plugins/";
+  QString pluginPath = "/usr/local/lib/qgis/plugins/";
+  QString prefixPath = "/usr/local";
 #endif
-  QgsProviderRegistry::instance(myPluginsDir);
+
+  QgsApplication::setPluginPath( pluginPath );
+  QgsApplication::setPrefixPath( prefixPath, true);
+  QgsApplication::initQgis();
 
   QSettings settings;
 
@@ -91,7 +99,7 @@ void HlpFlightPlannerApp::initApp()
   // CRS
   int epsg = settings.value( "/hlp/default_crs", 21781 ).toInt();
   QgsCoordinateReferenceSystem crs = QgsCoordinateReferenceSystem( epsg, QgsCoordinateReferenceSystem::EpsgCrsId );
-  //mMapCanvas->setCrsTransformEnabled( true );
+  mMapCanvas->setCrsTransformEnabled( true );
   mMapCanvas->setDestinationCrs( crs );
 
   // add the layers
