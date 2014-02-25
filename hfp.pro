@@ -17,26 +17,28 @@ SOURCES += main.cpp\
     core/hlpmapregistry.cpp \
     app/hlpflightplannerapp.cpp \
     gui/hlpprojectprojectproperties.cpp \
-    gui/hlpmapmanager.cpp #\
-#    maptools/hlpaddprofile.cpp \
-#    maptools/hlpmaptooledit.cpp \
-#    maptools/hlpmaptoolcatpure.cpp
+    gui/hlpmapmanager.cpp \
+    maptools/hlpmaptooledit.cpp \
+    maptools/hlpmaptoolcatpure.cpp \
+    maptools/hlpaddprofile.cpp \
+
 
 HEADERS  += \
     core/hlpproject.h \
     core/hlpmapregistry.h \
     app/hlpflightplannerapp.h \
     gui/hlpprojectprojectproperties.h \
-    gui/hlpmapmanager.h# \
-#    maptools/hlpaddprofile.h \
-#    maptools/hlpmaptooledit.h \
-#    maptools/hlpmaptoolcatpure.h
+    gui/hlpmapmanager.h\
+    maptools/hlpmaptooledit.h \
+    maptools/hlpmaptoolcatpure.h \
+    maptools/hlpaddprofile.h \
 
 FORMS    += \
     ui/hlpprojectprojectproperties.ui \
     ui/hlpmapmanager.ui \
     ui/hlpflightplannerapp.ui
 
+RESOURCES += images/images.qrc
 
 
 win32:CONFIG(Release, Debug|Release) {
@@ -61,14 +63,12 @@ win32:{
   DEPENDPATH += C:/OSGeo4W/include
   INCLUDEPATH += C:/OSGeo4W/apps/qgis-dev/include
   DEPENDPATH += C:/OSGeo4W/apps/qgis-dev/include
+  DEFINES += GUI_EXPORT=__declspec(dllimport) CORE_EXPORT=__declspec(dllimport)
 }
 
 unix {
   LIBS += -L/usr/local/lib/ -lqgis_core -lqgis_gui
   LIBS += -L/usr/local/lib/qgis/plugins/ -lgdalprovider
   INCLUDEPATH += /usr/local/include/qgis
+  DEFINES += GUI_EXPORT= CORE_EXPORT=
 }
-
-DEFINES += GUI_EXPORT= CORE_EXPORT=
-
-RESOURCES += images/images.qrc

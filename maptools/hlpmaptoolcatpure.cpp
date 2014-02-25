@@ -1,5 +1,7 @@
 #include <QKeyEvent>
 #include <QStatusBar>
+#include <QCursor>
+#include <QPixmap>
 
 
 #include "qgscursors.h"
@@ -19,7 +21,7 @@ HlpMapToolCapture::HlpMapToolCapture(QgsMapCanvas* canvas, QgsVectorLayer *layer
   mCapturing = false;
 
   QPixmap mySelectQPixmap = QPixmap(( const char ** ) capture_point_cursor );
-    mCursor = QCursor( mySelectQPixmap, 8, 8 );
+  mCursor = QCursor( mySelectQPixmap, 8, 8 );
 }
 
 
@@ -227,8 +229,7 @@ void HlpMapToolCapture::validateGeometry()
 void HlpMapToolCapture::addError( QgsGeometry::Error e )
 {
   mGeomErrors << e;
-  QgsVectorLayer *vlayer = qobject_cast<QgsVectorLayer *>( mCanvas->currentLayer() );
-  if ( !vlayer )
+  if ( !mLayer )
     return;
 
   if ( !mTip.isEmpty() )
@@ -239,7 +240,7 @@ void HlpMapToolCapture::addError( QgsGeometry::Error e )
   if ( e.hasWhere() )
   {
     QgsVertexMarker *vm =  new QgsVertexMarker( mCanvas );
-    vm->setCenter( mCanvas->mapSettings().layerToMapCoordinates( vlayer, e.where() ) );
+    vm->setCenter( mCanvas->mapSettings().layerToMapCoordinates( mLayer, e.where() ) );
     vm->setIconType( QgsVertexMarker::ICON_X );
     vm->setPenWidth( 2 );
     vm->setToolTip( e.what() );

@@ -7,7 +7,6 @@
 
 #include "hlpmaptooledit.h"
 
-class QgsVectorLayer;
 
 class HlpMapToolCapture : public HlpMapToolEdit
 {
