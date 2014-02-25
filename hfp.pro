@@ -62,10 +62,20 @@ FORMS    += \
 #}
 
 win32 {
-  LIBS += C:/OSGeo4W/lib/QtCore4.lib
-  LIBS += C:/OSGeo4W/lib/QtGui4.lib
-  LIBS += C:/OSGeo4W/apps/qgis-dev/lib/qgis_core.lib
-  LIBS += C:/OSGeo4W/apps/qgis-dev/lib/qgis_gui.lib
+#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtCore4.lib
+#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtGui4.lib
+#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtXml4.lib
+
+  PRE_TARGETDEPS += C:/OSGeo4W/apps/qgis-dev/lib/qgis_core.lib
+  PRE_TARGETDEPS += C:/OSGeo4W/apps/qgis-dev/lib/qgis_gui.lib
+
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtCore4
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtGui4
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtXml4
+
+  LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_core
+  LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_gui
+
   INCLUDEPATH += C:/OSGeo4W/include
   DEPENDPATH += C:/OSGeo4W/include
   INCLUDEPATH += C:/OSGeo4W/apps/qgis-dev/include
@@ -82,7 +92,3 @@ unix {
 DEFINES += GUI_EXPORT= CORE_EXPORT=
 
 RESOURCES += images/images.qrc
-
-
-
-
