@@ -18,7 +18,16 @@ class QgsMapLayerRegistry;
 class QgsVectorLayer;
 
 
-
+// Static calls to enforce singleton behaviour
+HlpProject *HlpProject::mInstance = 0;
+HlpProject *HlpProject::instance()
+{
+  if ( mInstance == 0 )
+  {
+    mInstance = new HlpProject();
+  }
+  return mInstance;
+}
 
 HlpProject::HlpProject()
 {
@@ -27,11 +36,13 @@ HlpProject::HlpProject()
   mPath = "";
 }
 
+QgsCoordinateReferenceSystem HlpProject::crs()
+{
+  return QgsCoordinateReferenceSystem( mEpsg, QgsCoordinateReferenceSystem::EpsgCrsId );
+}
+
 QMap<QString, QgsMapLayer*> HlpProject::createLayers()
 {
-  QSettings settings;
-  int epsg = settings.value( "/hlp/default_crs", 21781 ).toInt();
-
   QMap<QString,QgsMapLayer*> layerList;
   QList<HlpField> fields;
 
@@ -39,19 +50,19 @@ QMap<QString, QgsMapLayer*> HlpProject::createLayers()
   fields = QList<HlpField>() << HlpField("pkid", "integer")
                              << HlpField("number","integer")
                              << HlpField("comment","text");
-  layerList.insert("flightline", new QgsVectorLayer( createUri( "LineString", fields, epsg ), "Flight lines", "memory" ) );
+  layerList.insert("flightline", new QgsVectorLayer( createUri( "LineString", fields, mEpsg ), "Flight lines", "memory" ) );
 
   // profiles
   fields = QList<HlpField>() << HlpField("pkid", "integer")
                              << HlpField("values","text");
-  layerList.insert("profile", new QgsVectorLayer( createUri( "LineString", fields, epsg ), "Profiles", "memory" ) );
+  layerList.insert("profile", new QgsVectorLayer( createUri( "LineString", fields, mEpsg ), "Profiles", "memory" ) );
 
   // way points
   fields = QList<HlpField>() << HlpField("id_flightline", "integer")
                              << HlpField("type","string")
                              << HlpField("id_profile","integer")
                              << HlpField("dz","double");
-  layerList.insert("waypoint",  new QgsVectorLayer( createUri( "Point", fields, epsg ), "Way points", "memory" ) );
+  layerList.insert("waypoint",  new QgsVectorLayer( createUri( "Point", fields, mEpsg ), "Way points", "memory" ) );
 
   if ( layerList.values() != QgsMapLayerRegistry::instance()->addMapLayers( layerList.values(), true, false ) )
     return QMap<QString,QgsMapLayer*>();

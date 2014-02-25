@@ -1,6 +1,9 @@
-#include "hlpmapregistry.h"
+
 #include "qgsmaplayerregistry.h"
 #include "qgsmapcanvas.h"
+
+#include "hlpmapregistry.h"
+#include "hlpproject.h"
 
 // Static calls to enforce singleton behaviour
 HlpMapRegistry *HlpMapRegistry::mInstance = 0;
@@ -23,6 +26,7 @@ bool HlpMapRegistry::addMapLayer( QgsRasterLayer *layer )
 {
   if ( layer && layer->isValid() )
   {
+    layer->setCrs( HlpProject::instance()->crs() );
     QgsMapLayerRegistry::instance()->addMapLayer( layer, false );
     mMaps.insert( 0, QgsMapCanvasLayer( layer, true ) );
     QModelIndex index = createIndex( 0, 0 );

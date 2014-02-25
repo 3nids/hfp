@@ -5,28 +5,35 @@
 
 #include "qgsmaplayerregistry.h"
 #include "qgsvectorlayer.h"
-
+#include "qgscoordinatereferencesystem.h"
 
 class HlpProject
 {
   public:
     typedef QPair<QString, QString> HlpField;
 
+    //! Returns the instance pointer, creating the object on the first call
+    static HlpProject * instance();
+
     HlpProject();
 
     //! access coordinate system info
+    QgsCoordinateReferenceSystem crs();
     int epsg(){ return mEpsg; }
     void setEpsg( int epsg ){ mEpsg = epsg; }
 
     //! create the layers and add them to the map canvas
-    static QMap<QString, QgsMapLayer*> createLayers();
+    QMap<QString, QgsMapLayer*> createLayers();
     //! create a URI string for the given geometry type and fields
-    static QString createUri(QString geomType, QList<HlpField> fields, int epsg);
+    QString createUri(QString geomType, QList<HlpField> fields, int epsg);
+
+
 
 
 private:
     QString mPath;
     int mEpsg;
+    static HlpProject* mInstance;
 
     bool readProperty(QString property, int &value);
 

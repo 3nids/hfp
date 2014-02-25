@@ -91,19 +91,15 @@ void HlpFlightPlannerApp::initGui()
 
 void HlpFlightPlannerApp::initApp()
 {
-  QSettings settings;
-
   // create map layer registry if doesn't exist
   QgsMapLayerRegistry::instance();
 
   // CRS
-  int epsg = settings.value( "/hlp/default_crs", 21781 ).toInt();
-  QgsCoordinateReferenceSystem crs = QgsCoordinateReferenceSystem( epsg, QgsCoordinateReferenceSystem::EpsgCrsId );
   mMapCanvas->setCrsTransformEnabled( true );
-  mMapCanvas->setDestinationCrs( crs );
+  mMapCanvas->setDestinationCrs( HlpProject::instance()->epsg() );
 
   // add the layers
-  QMap<QString, QgsMapLayer*> layerList = HlpProject::createLayers();
+  QMap<QString, QgsMapLayer*> layerList = HlpProject::instance()->createLayers();
   if (layerList.isEmpty())
   {
     // TODO: what?
