@@ -37,36 +37,26 @@ FORMS    += \
     ui/hlpmapmanager.ui \
     ui/hlpflightplannerapp.ui
 
-#win32:CONFIG(release, debug|release): {
-#  LIBS += -LC:/OSGeo4W/lib -lQtCore4 -lQtGui4
-#  LIBS += -LC:/OSGeo4W/apps/qgis-dev/lib -lqgis_core -lqgis_gui
-#  # LIBS += -LC:/OSGeo4W/apps/qgis-dev/plugins -lgdalprovider
-#  INCLUDEPATH += C:/OSGeo4W/include
-#  DEPENDPATH += C:/OSGeo4W/include
-#  INCLUDEPATH += C:/OSGeo4W/apps/qgis-dev/include
-#  DEPENDPATH += C:/OSGeo4W/apps/qgis-dev/include
-#  # cross compilation include
-#  INCLUDEPATH += /usr/local/include/qgis
-#  INCLUDEPATH += /usr/include/
-#  INCLUDEPATH += /usr/include/x86_64-linux-gnu/ # if stubs-32.h is missing: sudo apt-get install libc6-dev-i386
-#}
-#else:win32:CONFIG(debug, debug|release)
-#{
-#  LIBS += -LC:/OSGeo4W/lib -lQtCore4d -lQtGui4d
-#  LIBS += -LC:/OSGeo4W/apps/qgis-dev/lib -lqgis_core -lqgis_gui
-#  # LIBS += -LC:/OSGeo4W/apps/qgis-dev/plugins -lgdalprovider
-#  INCLUDEPATH += C:/OSGeo4W/include
-#  DEPENDPATH += C:/OSGeo4W/include
-#  INCLUDEPATH += C:/OSGeo4W/apps/qgis-dev/include
-#  DEPENDPATH += C:/OSGeo4W/apps/qgis-dev/include
-#}
 
-win32 {
+
+win32:CONFIG(Release, Debug|Release) {
   LIBS += -L"C:/OSGeo4W/lib/" -lQtCore4
   LIBS += -L"C:/OSGeo4W/lib/" -lQtGui4
   LIBS += -L"C:/OSGeo4W/lib/" -lQtXml4
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_core
   LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_gui
+}
+else:win32:CONFIG(Debug, Debug|Release) {
+#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtCore4.lib
+#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtGui4.lib
+#  PRE_TARGETDEPS += C:/OSGeo4W/lib/QtXml4.lib
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtCore4
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtGui4
+  LIBS += -L"C:/OSGeo4W/lib/" -lQtXml4
+  LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_core
+  LIBS += -L"C:/OSGeo4W/apps/qgis-dev/lib/" -lqgis_gui
+}
+win32:{
   INCLUDEPATH += C:/OSGeo4W/include
   DEPENDPATH += C:/OSGeo4W/include
   INCLUDEPATH += C:/OSGeo4W/apps/qgis-dev/include
@@ -74,7 +64,6 @@ win32 {
 }
 
 unix {
-  # sige: local, mac: rien
   LIBS += -L/usr/local/lib/ -lqgis_core -lqgis_gui
   LIBS += -L/usr/local/lib/qgis/plugins/ -lgdalprovider
   INCLUDEPATH += /usr/local/include/qgis

@@ -48,8 +48,8 @@ void HlpFlightPlannerApp::initGui()
 #if defined(Q_WS_MAC)
   QString pluginPath = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
 #elif defined(Q_WS_WIN)
-  QString pluginPath = "/usr/local/lib/qgis/plugins/";
-  QString prefixPath = "/usr/local";
+  QString pluginPath = "c:\\OSGeo4W\\apps\\qgis-dev\\plugins";
+  QString prefixPath = "c:\\OSGeo4W\\apps\\qgis-dev";
 #else
   QString pluginPath = "/usr/local/lib/qgis/plugins/";
   QString prefixPath = "/usr/local";
