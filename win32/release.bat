@@ -1,6 +1,7 @@
 cd ../
 rmdir build-win /Q /S
 mkdir build-win
+mkdir build-win\iconengines
 
 copy ..\build-hfp-Desktop-Release\release\hfp.exe build-win\
 copy c:\OSGeo4W\bin\QtCore4.dll build-win\
@@ -43,8 +44,11 @@ copy c:\OSGeo4W\bin\hdf5.dll build-win\
 copy c:\OSGeo4W\bin\szip.dll build-win\
 copy c:\OSGeo4W\bin\libcurl.dll build-win\
 copy c:\OSGeo4W\bin\zlib1.dll build-win\
+copy c:\OSGeo4W\bin\openjp2.dll build-win\
+copy c:\OSGeo4W\bin\spatialindex1.dll build-win\
+copy c:\OSGeo4W\bin\qwt5.dll build-win\
 
-
+copy c:\OSGeo4W\apps\qt4\plugins\iconengines\qsvgicon4.dll build-win\iconengines\
 
 copy C:\Progra~1\Git\bin\libiconv-2.dll build-win\
 copy C:\Progra~1\Git\bin\libintl-8.dll build-win\

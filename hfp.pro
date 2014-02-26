@@ -40,7 +40,6 @@ FORMS    += \
 
 RESOURCES += images/images.qrc
 
-
 win32:CONFIG(Release, Debug|Release) {
   LIBS += -L"C:/OSGeo4W/lib/" -lQtCore4
   LIBS += -L"C:/OSGeo4W/lib/" -lQtGui4
