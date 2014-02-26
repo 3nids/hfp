@@ -33,6 +33,9 @@ class HlpFlightPlannerApp : public QMainWindow //, private Ui::HlpFlightPlannerA
     void panMode();
     void addProfile();
 
+    void zoomIn();
+    void zoomOut();
+
   private:
     static HlpFlightPlannerApp* mInstance;
 

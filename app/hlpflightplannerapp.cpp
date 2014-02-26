@@ -83,6 +83,7 @@ void HlpFlightPlannerApp::initApp()
   // Map canvas
   mMapCanvas = new QgsMapCanvas( centralWidget, "theMapCanvas" );
   mMapCanvas->setCanvasColor( QColor( 255, 255, 255 ) );
+  mMapCanvas->setWheelAction( QgsMapCanvas::WheelZoomAndRecenter, 2 );
   centralLayout->addWidget( mMapCanvas, 0, 0, 2, 1 );
 
   // Message bar
@@ -102,6 +103,7 @@ void HlpFlightPlannerApp::initApp()
   // CRS
   mMapCanvas->setCrsTransformEnabled( true );
   mMapCanvas->setDestinationCrs( HlpProject::instance()->epsg() );
+  mMapCanvas->refresh();
 
   QgsMapToPixel test = mMapCanvas->mapSettings().mapToPixel();
 
@@ -127,6 +129,10 @@ void HlpFlightPlannerApp::initApp()
   connect( ui->mActionAddProfile, SIGNAL( triggered() ), this, SLOT( addProfile() ) );
   mAddProfileTool->setAction(ui->mActionAddProfile);
 
+  // Other actions
+  connect( ui->mActionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()) );
+  connect( ui->mActionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()) );
+
 }
 
 void HlpFlightPlannerApp::setLayerSet( bool updateExtent )
@@ -147,4 +153,16 @@ void HlpFlightPlannerApp::panMode()
 void HlpFlightPlannerApp::addProfile()
 {
   mMapCanvas->setMapTool( mAddProfileTool );
+}
+
+void HlpFlightPlannerApp::zoomIn()
+{
+  double scale = QSettings().value( "/hlp/scale_factor", 2.0 ).toDouble();
+  mMapCanvas->zoomByFactor( 1 / scale );
+}
+
+void HlpFlightPlannerApp::zoomOut()
+{
+  double scale = QSettings().value( "/hlp/scale_factor", 2.0 ).toDouble();
+  mMapCanvas->zoomByFactor( scale );
 }
