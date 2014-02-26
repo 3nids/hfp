@@ -73,6 +73,7 @@ void HlpFlightPlannerApp::initApp()
   QgsApplication::initQgis();
 
   QSettings settings;
+  settings.setValue( "/qgis/digitizing/marker_only_for_selected", true );
 
   // Central widget
   QWidget *centralWidget = this->centralWidget();
@@ -83,7 +84,7 @@ void HlpFlightPlannerApp::initApp()
   // Map canvas
   mMapCanvas = new QgsMapCanvas( centralWidget, "theMapCanvas" );
   mMapCanvas->setCanvasColor( QColor( 255, 255, 255 ) );
-  mMapCanvas->setWheelAction( QgsMapCanvas::WheelZoomAndRecenter, 2 );
+  mMapCanvas->setWheelAction( QgsMapCanvas::WheelZoomToMouseCursor, 2 );
   centralLayout->addWidget( mMapCanvas, 0, 0, 2, 1 );
 
   // Message bar
@@ -117,6 +118,9 @@ void HlpFlightPlannerApp::initApp()
   mFlightlineLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("flightline") );
   mProfileLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("profile") );
   mWaypointLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("waypoint") );
+  mFlightlineLayer->startEditing();
+  mProfileLayer->startEditing();
+  mWaypointLayer->startEditing();
 
   // layers registries
   connect( HlpMapRegistry::instance(), SIGNAL(layersChanged(bool)), this, SLOT(setLayerSet(bool)) );
@@ -138,7 +142,14 @@ void HlpFlightPlannerApp::initApp()
 void HlpFlightPlannerApp::setLayerSet( bool updateExtent )
 {
   QList<QgsMapCanvasLayer> layers;
-  layers.append( HlpMapRegistry::instance()->layers() );
+  layers.append( QgsMapCanvasLayer( mFlightlineLayer, true ) );
+  layers.append( QgsMapCanvasLayer( mWaypointLayer, true ) );
+  layers.append( QgsMapCanvasLayer( mProfileLayer, true ) );
+  // reverse order of legend
+  QListIterator<QgsMapCanvasLayer> maps( HlpMapRegistry::instance()->layers() );
+  maps.toBack();
+  while ( maps.hasPrevious() )
+    layers.append( maps.previous() );
   mMapCanvas->setLayerSet( layers );
   if ( updateExtent )
     mMapCanvas->zoomToFullExtent();

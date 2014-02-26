@@ -3,7 +3,8 @@
 #include <QMessageBox>
 
 #include "qgsmapcanvas.h"
-
+#include "qgsvectorlayer.h"
+#include "qgsvectorlayereditbuffer.h"
 
 #include "hlpaddprofile.h"
 
@@ -65,23 +66,19 @@ void HlpAddProfile::canvasReleaseEvent( QMouseEvent * e )
     }
 
     //create QgsFeature with wkb representation
-    QgsFeature* f = new QgsFeature( mLayer->pendingFields(),  0 );
+    QgsFeature f = QgsFeature( mLayer->pendingFields(),  0 );
 
     QgsGeometry *g;
     g = QgsGeometry::fromPolyline( points().toVector() );
-    f->setGeometry( g );
+    f.setGeometry( g );
     mLayer->beginEditCommand( tr( "Feature added" ) );
 
-    // TODO add feature
-    bool ok = true;
-
-    if ( ok )
+    if ( mLayer->editBuffer()->addFeature( f ) )
     {
       mLayer->endEditCommand();
     }
     else
     {
-      delete f;
       mLayer->destroyEditCommand();
     }
 
