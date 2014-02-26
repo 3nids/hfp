@@ -13,7 +13,9 @@ namespace Ui {
   class HlpFlightPlannerApp;
   }
 
-class HlpFlightPlannerApp : public QMainWindow
+//#include "ui_hlpflightplannerapp.h"
+
+class HlpFlightPlannerApp : public QMainWindow //, private Ui::HlpFlightPlannerApp
 {
   Q_OBJECT
 
@@ -23,17 +25,19 @@ class HlpFlightPlannerApp : public QMainWindow
     explicit HlpFlightPlannerApp(QWidget *parent = 0);
     ~HlpFlightPlannerApp();
 
+    Ui::HlpFlightPlannerApp *ui;
+
   public slots:
     void setLayerSet(bool updateExtent);
+
     void panMode();
+    void addProfile();
 
   private:
     static HlpFlightPlannerApp* mInstance;
 
-    void initGui();
     void initApp();
 
-    Ui::HlpFlightPlannerApp *ui;
     QgsMapCanvas* mMapCanvas;
     QgsMessageBar* mInfoBar;
 
@@ -41,12 +45,10 @@ class HlpFlightPlannerApp : public QMainWindow
     QgsVectorLayer* mProfileLayer;
     QgsVectorLayer* mWaypointLayer;
 
-    HlpProject mProject;
     HlpMapManager* mMapManager;
 
     QgsMapTool* mPanTool;
-
-
+    QgsMapTool* mAddProfileTool;
 
 };
 

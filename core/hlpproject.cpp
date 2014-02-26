@@ -41,6 +41,13 @@ QgsCoordinateReferenceSystem HlpProject::crs()
   return QgsCoordinateReferenceSystem( mEpsg, QgsCoordinateReferenceSystem::EpsgCrsId );
 }
 
+void HlpProject::setEpsg(int epsg)
+{
+  mEpsg = epsg;
+
+  // TODO: transfrom vector layer
+}
+
 QMap<QString, QgsMapLayer*> HlpProject::createLayers()
 {
   QMap<QString,QgsMapLayer*> layerList;
@@ -64,7 +71,10 @@ QMap<QString, QgsMapLayer*> HlpProject::createLayers()
                              << HlpField("dz","double");
   layerList.insert("waypoint",  new QgsVectorLayer( createUri( "Point", fields, mEpsg ), "Way points", "memory" ) );
 
-  if ( layerList.values() != QgsMapLayerRegistry::instance()->addMapLayers( layerList.values(), true, false ) )
+  foreach( QgsMapLayer* layer, layerList.values() )
+    layer->setCrs( crs() );
+
+  if ( layerList.values() != QgsMapLayerRegistry::instance()->addMapLayers( layerList.values(), true ) )
     return QMap<QString,QgsMapLayer*>();
 
   return layerList;

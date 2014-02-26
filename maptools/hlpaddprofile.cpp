@@ -10,7 +10,7 @@
 
 
 
-HlpAddProfile::HlpAddProfile(QgsMapCanvas* canvas, QgsVectorLayer* profileLayer) :
+HlpAddProfile::HlpAddProfile( QgsMapCanvas* canvas, QgsVectorLayer* profileLayer ) :
   HlpMapToolCapture(canvas, profileLayer)
 {
 }

@@ -38,11 +38,9 @@ class HlpMapToolCapture : public HlpMapToolEdit
     void validationFinished();
 
   protected:
-    int nextPoint( const QPoint &p );
-
     /**Adds a point to the rubber band (in map coordinates) and to the capture list (in layer coordinates)
      @return 0 in case of success, 1 if current layer is not a vector layer, 2 if coordinate transformation failed*/
-    int addVertex( const QPoint& p );
+    int addVertex(const QPoint& mapPoint );
 
     /**Removes the last vertex from mRubberBand and mCaptureList*/
     void undo();
@@ -63,10 +61,10 @@ class HlpMapToolCapture : public HlpMapToolEdit
   private:
     bool mCapturing;
 
-    /** rubber band for polylines and polygons */
+    /** rubber band */
     QgsRubberBand* mRubberBand;
 
-    /** temporary rubber band for polylines and polygons. this connects the last added point to the mouse cursor position */
+    /** temporary rubber band. this connects the last added point to the mouse cursor position */
     QgsRubberBand* mTempRubberBand;
 
     /** List to store the points of digitised lines and polygons (in layer coordinates)*/

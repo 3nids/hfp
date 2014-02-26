@@ -20,7 +20,7 @@ class HlpProject
     //! access coordinate system info
     QgsCoordinateReferenceSystem crs();
     int epsg(){ return mEpsg; }
-    void setEpsg( int epsg ){ mEpsg = epsg; }
+    void setEpsg( int epsg );
 
     //! create the layers and add them to the map canvas
     QMap<QString, QgsMapLayer*> createLayers();

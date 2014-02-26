@@ -14,8 +14,10 @@
 #include "../core/hlpproject.h"
 #include "../core/hlpmapregistry.h"
 #include "../gui/hlpmapmanager.h"
+#include "../maptools/hlpaddprofile.h"
 
 #include "hlpflightplannerapp.h"
+
 
 #include "ui_hlpflightplannerapp.h"
 
@@ -24,6 +26,17 @@ HlpFlightPlannerApp *HlpFlightPlannerApp::mInstance = 0;
 
 HlpFlightPlannerApp::~HlpFlightPlannerApp()
 {
+  QgsApplication::exitQgis();
+
+  delete HlpProject::instance();
+  delete HlpMapRegistry::instance();
+
+  delete mPanTool;
+  delete mAddProfileTool;
+
+  delete mMapManager;
+  delete mMapCanvas;
+
   delete ui;
 }
 
@@ -32,7 +45,7 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   ui(new Ui::HlpFlightPlannerApp)
 {
   ui->setupUi(this);
-  initGui();
+
   initApp();
   mInstance = this;
 
@@ -43,7 +56,7 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
 //  HlpMapRegistry::instance()->addMapLayer(mypLayer2);
 }
 
-void HlpFlightPlannerApp::initGui()
+void HlpFlightPlannerApp::initApp()
 {
 #if defined(Q_WS_MAC)
   QString pluginPath = "/Users/denis/apps/qgis.app/Contents/MacOS/lib/qgis";
@@ -79,18 +92,10 @@ void HlpFlightPlannerApp::initGui()
 
   // Map manager
   mMapManager = new HlpMapManager( this );
-  connect( ui->mActionMapManager, SIGNAL(toggled(bool)), mMapManager, SLOT(setVisible(bool)) );
-  connect( mMapManager->toggleViewAction(), SIGNAL(toggled(bool)), ui->mActionMapManager, SLOT(setChecked(bool)) );
+  connect( ui->mActionMapManager, SIGNAL(toggled(bool)), mMapManager, SLOT( setVisible( bool )) );
+  connect( mMapManager->toggleViewAction(), SIGNAL(toggled(bool)), ui->mActionMapManager, SLOT( setChecked( bool ) ) );
   addDockWidget( Qt::LeftDockWidgetArea, mMapManager );
 
-  // Map tools
-  connect( ui->mActionPan, SIGNAL(triggered()), this, SLOT(panMode()));
-  mPanTool = new QgsMapToolPan(mMapCanvas);
-  mPanTool->setAction(ui->mActionPan);
-}
-
-void HlpFlightPlannerApp::initApp()
-{
   // create map layer registry if doesn't exist
   QgsMapLayerRegistry::instance();
 
@@ -98,9 +103,11 @@ void HlpFlightPlannerApp::initApp()
   mMapCanvas->setCrsTransformEnabled( true );
   mMapCanvas->setDestinationCrs( HlpProject::instance()->epsg() );
 
+  QgsMapToPixel test = mMapCanvas->mapSettings().mapToPixel();
+
   // add the layers
   QMap<QString, QgsMapLayer*> layerList = HlpProject::instance()->createLayers();
-  if (layerList.isEmpty())
+  if ( layerList.isEmpty() )
   {
     // TODO: what?
     return;
@@ -109,12 +116,16 @@ void HlpFlightPlannerApp::initApp()
   mProfileLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("profile") );
   mWaypointLayer = dynamic_cast<QgsVectorLayer*>( layerList.value("waypoint") );
 
-  // create empty project
-  mProject = HlpProject();
-
-
   // layers registries
   connect( HlpMapRegistry::instance(), SIGNAL(layersChanged(bool)), this, SLOT(setLayerSet(bool)) );
+
+  // Map tools
+  mPanTool = new QgsMapToolPan( mMapCanvas );
+  connect( ui->mActionPan, SIGNAL(triggered()), this, SLOT(panMode()));
+  mPanTool->setAction(ui->mActionPan);
+  mAddProfileTool = new HlpAddProfile( mMapCanvas, mProfileLayer );
+  connect( ui->mActionAddProfile, SIGNAL( triggered() ), this, SLOT( addProfile() ) );
+  mAddProfileTool->setAction(ui->mActionAddProfile);
 
 }
 
@@ -133,3 +144,7 @@ void HlpFlightPlannerApp::panMode()
   mMapCanvas->setMapTool(mPanTool);
 }
 
+void HlpFlightPlannerApp::addProfile()
+{
+  mMapCanvas->setMapTool( mAddProfileTool );
+}

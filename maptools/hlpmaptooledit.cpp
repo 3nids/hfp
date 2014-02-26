@@ -20,11 +20,11 @@
 
 #include "hlpmaptooledit.h"
 
+
 HlpMapToolEdit::HlpMapToolEdit( QgsMapCanvas* canvas )
     : QgsMapTool( canvas )
 {
 }
-
 
 HlpMapToolEdit::~HlpMapToolEdit()
 {

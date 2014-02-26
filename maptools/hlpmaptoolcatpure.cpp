@@ -7,6 +7,7 @@
 #include "qgscursors.h"
 #include "qgsmapcanvas.h"
 #include "qgsvectorlayer.h"
+#include "qgspoint.h"
 
 #include "../app/hlpflightplannerapp.h"
 
@@ -17,6 +18,9 @@
 HlpMapToolCapture::HlpMapToolCapture(QgsMapCanvas* canvas, QgsVectorLayer *layer) :
   HlpMapToolEdit(canvas)
   , mLayer( layer )
+  , mRubberBand( 0 )
+  , mTempRubberBand( 0 )
+  , mValidator( 0 )
 {
   mCapturing = false;
 
@@ -38,6 +42,11 @@ void HlpMapToolCapture::deactivate()
 
 void HlpMapToolCapture::canvasMoveEvent( QMouseEvent * e )
 {
+  if ( mTempRubberBand && mCapturing )
+  {
+    QgsPoint mapPoint = toMapCoordinates( e->pos() );
+    mTempRubberBand->movePoint( mapPoint );
+  }
 } // mouseMoveEvent
 
 
@@ -47,40 +56,17 @@ void HlpMapToolCapture::canvasPressEvent( QMouseEvent *e )
   // nothing to be done
 }
 
-int HlpMapToolCapture::nextPoint( const QPoint &p )
-{
-  QgsPoint digitisedPoint;
-  try
-  {
-    digitisedPoint = toLayerCoordinates( mLayer, p );
-  }
-  catch ( QgsCsException &cse )
-  {
-    Q_UNUSED( cse );
-    QgsDebugMsg( "transformation to layer coordinate failed" );
-    return 2;
-  }
-
-  return 0;
-}
-
 
 int HlpMapToolCapture::addVertex( const QPoint &p )
 {
-  QgsPoint mapPoint;
-
-  int res = nextPoint( p );
-  if ( res != 0 )
-  {
-    QgsDebugMsg( "nextPoint failed: " + QString::number( res ) );
-    return res;
-  }
-
   if ( !mRubberBand )
   {
     mRubberBand = createRubberBand( QGis::Line );
   }
+
+  QgsPoint mapPoint = toMapCoordinates( p );
   mRubberBand->addPoint( mapPoint );
+  mCaptureList.append( toLayerCoordinates( mLayer, mapPoint ) );
 
   if ( !mTempRubberBand )
   {

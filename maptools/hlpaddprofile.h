@@ -15,8 +15,7 @@ class HlpAddProfile : public HlpMapToolCapture
     //! destructor
     virtual ~HlpAddProfile();
 
-    //! Overridden mouse release event
-    virtual void canvasReleaseEvent( QMouseEvent * e ) = 0;
+    void canvasReleaseEvent( QMouseEvent * e );
 
     void activate();
   signals:
