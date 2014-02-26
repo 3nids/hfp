@@ -55,6 +55,10 @@ copy C:\Progra~1\Git\bin\libintl-8.dll build-win\
 
 copy c:\OSGeo4W\apps\qgis-dev\bin\qgis_Core.dll build-win\
 copy c:\OSGeo4W\apps\qgis-dev\bin\qgis_gui.dll build-win\
+copy c:\OSGeo4W\apps\qgis-dev\bin\msvcp90.dll build-win\
+
+copy c:\windows\system32\msvcp100.dll build-win\
+copy c:\windows\system32\msvcr100.dll build-win\
 
 
 cd win32
