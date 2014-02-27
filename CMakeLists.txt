@@ -1,13 +1,19 @@
 cmake_minimum_required(VERSION 2.8)
 PROJECT(hfp)
+set (hfp_VERSION_MAJOR 1)
+set (hfp_VERSION_MINOR 0)
 SET(CMAKE_COLOR_MAKEFILE ON)
 # set path to additional CMake modules
 IF (WIN32)
-  SET(CMAKE_MODULE_PATH c:\OSGeo4W\apps\qgis-dev ${CMAKE_MODULE_PATH})
-  SET(CMAKE_MODULE_PATH c:\OSGeo4W\apps\qgis ${CMAKE_MODULE_PATH})
+  SET(CMAKE_MODULE_PATH c:/OSGeo4W/apps/qgis-dev ${CMAKE_MODULE_PATH})
 ELSE (WIN32)
   SET(CMAKE_MODULE_PATH /usr/local/share/qgis ${CMAKE_MODULE_PATH})
 ENDIF(WIN32)
+SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+
+
+set(TIFF_LIBRARY c:/OSGeo4W/lib/libtiff_i.lib)
+set(PNG_LIBRARY c:/OSGeo4W/lib/libpng13.lib)
 
 FIND_PACKAGE(QGIS REQUIRED)
 IF (NOT QGIS_FOUND)
@@ -18,17 +24,22 @@ IF (WIN32)
   # Note: MSVC doesn't like when the macros are quotes
   # and MSYS doesn't like them unqouted (bacause of braces)
   # import qgis classes
-  IF (MSVC)
-    ADD_DEFINITIONS("-DGUI_EXPORT=__declspec(dllimport)")
-    ADD_DEFINITIONS("-DCORE_EXPORT=__declspec(dllimport)")
-  ELSE (MSVC)
-    ADD_DEFINITIONS("\"-DGUI_EXPORT=__declspec(dllimport)\"")
-    ADD_DEFINITIONS("\"-DCORE_EXPORT=__declspec(dllimport)\"")
-  ENDIF (MSVC)
+  ADD_DEFINITIONS("-DGUI_EXPORT=__declspec(dllimport)")
+  ADD_DEFINITIONS("-DCORE_EXPORT=__declspec(dllimport)")  
 ELSE (WIN32)
   ADD_DEFINITIONS(-DGUI_EXPORT=)
   ADD_DEFINITIONS(-DCORE_EXPORT=)
 ENDIF (WIN32)
+
+#FIND_PACKAGE(GDAL REQUIRED)
+#IF (NOT GDAL_FOUND)
+#  MESSAGE (SEND_ERROR "GDAL dependency was not found!")
+#ENDIF (NOT GDAL_FOUND)
+
+#FIND_PACKAGE(GEOS REQUIRED)
+#IF (NOT GEOS_FOUND)
+#  MESSAGE (SEND_ERROR "GEOS dependency was not found!")
+#ENDIF (NOT GEOS_FOUND)
 
 IF (CMAKE_BUILD_TYPE MATCHES Debug)
   ADD_DEFINITIONS(-DhfpDEBUG=1)
@@ -115,13 +126,13 @@ TARGET_LINK_LIBRARIES(hfp
   ${GDAL_LIBRARY}
 )
 
-IF (MSVC)
+IF (WIN32)
   # Very important or you get all kinds of odd side
   #effects like app crash on start up saying qtgui.dll
   TARGET_LINK_LIBRARIES( hfp
                          qtmain
                        )
-ENDIF (MSVC)
+ENDIF (WIN32)
 
 ########################################################
 # Install
