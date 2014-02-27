@@ -2,8 +2,27 @@
 
 Install osgeo4w: qgis, libqgis, qt libs
 
-Install Microsoft Visual studio 2008
+Install Microsoft Visual studio 2008 express
 
-Install cdb (install windows sdk, only select debugging tools for windows)
+Install Qt Creator
+-> config add qt libs
+
+
+
+Install cdb (install windows sdk, only select debugging tools for windows)???
 
 Do not mix release version of Qt libs with debug config in project
+
+
+
+
+target pc
+
+install Microsoft Visual C++ 2008 Redistributable Package (x86)
+http://www.microsoft.com/en-us/download/details.aspx?id=29
+
+install Microsoft Visual C++ 2005 Redistributable Package (x86)
+http://www.microsoft.com/en-us/download/confirmation.aspx?id=3387
+
+MFC security update
+http://www.microsoft.com/en-us/download/confirmation.aspx?id=26347
