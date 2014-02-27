@@ -1,9 +1,12 @@
-cd ../
+
 rmdir c:\hfp /Q /S
 mkdir c:\hfp
 mkdir c:\hfp\iconengines
+mkdir c:\hfp\qgis
+mkdir c:\hfp\qgis\resources
+mkdir c:\hfp\qgis\plugins
 
-copy ..\build-hfp-Desktop-Release\release\hfp.exe c:\hfp\
+copy ..\..\build-hfp-Desktop-Release\release\hfp.exe c:\hfp\
 copy c:\OSGeo4W\bin\QtCore4.dll c:\hfp\
 copy c:\OSGeo4W\bin\QtGui4.dll c:\hfp\
 copy c:\OSGeo4W\bin\QtXml4.dll c:\hfp\
@@ -60,13 +63,9 @@ copy c:\OSGeo4W\apps\qgis-dev\bin\msvcp90.dll c:\hfp\
 copy c:\windows\system32\msvcp100.dll c:\hfp\
 copy c:\windows\system32\msvcr100.dll c:\hfp\
 
-mkdir c:\hfp\qgis
-mkdir c:\hfp\qgis\resources
-mkdir c:\hfp\qgis\plugins
 copy C:\OSGeo4W\apps\qgis-dev\resources\* c:\hfp\qgis\resources
 copy C:\OSGeo4W\apps\qgis-dev\plugins\* c:\hfp\qgis\plugins
 
 
-cd win32
 
  

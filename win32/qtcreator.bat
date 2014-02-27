@@ -1,7 +1,5 @@
 ECHO Setting up QGIS DEV ENV
 
-
-
 set PYTHONPATH=
 
 set OSGEO4W_ROOT=C:\OSGeo4W
