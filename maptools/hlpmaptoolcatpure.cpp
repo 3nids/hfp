@@ -205,11 +205,7 @@ void HlpMapToolCapture::validateGeometry()
 
   mValidator = new QgsGeometryValidator( g );
   connect( mValidator, SIGNAL( errorFound( QgsGeometry::Error ) ), this, SLOT( addError( QgsGeometry::Error ) ) );
-  connect( mValidator, SIGNAL( finished() ), this, SLOT( validationFinished() ) );
   mValidator->start();
-
-  QStatusBar *sb = HlpFlightPlannerApp::instance()->statusBar();
-  sb->showMessage( tr( "Validation started." ) );
 }
 
 void HlpMapToolCapture::addError( QgsGeometry::Error e )
@@ -235,14 +231,5 @@ void HlpMapToolCapture::addError( QgsGeometry::Error e )
     mGeomErrorMarkers << vm;
   }
 
-  QStatusBar *sb = HlpFlightPlannerApp::instance()->statusBar();
-  sb->showMessage( e.what() );
-  if ( !mTip.isEmpty() )
-    sb->setToolTip( mTip );
-}
-
-void HlpMapToolCapture::validationFinished()
-{
-  QStatusBar *sb = HlpFlightPlannerApp::instance()->statusBar();
-  sb->showMessage( tr( "Validation finished." ) );
+  emit displayMessage( e.what(), QgsMessageBar::WARNING );
 }

@@ -13,19 +13,20 @@ namespace Ui {
   class HlpFlightPlannerApp;
   }
 
-//#include "ui_hlpflightplannerapp.h"
 
 class HlpFlightPlannerApp : public QMainWindow //, private Ui::HlpFlightPlannerApp
 {
   Q_OBJECT
 
   public:
-    static HlpFlightPlannerApp *instance() { return mInstance; }
 
     explicit HlpFlightPlannerApp(QWidget *parent = 0);
     ~HlpFlightPlannerApp();
 
     Ui::HlpFlightPlannerApp *ui;
+
+    int messageTimeout();
+
 
   public slots:
     void setLayerSet(bool updateExtent);
@@ -36,9 +37,12 @@ class HlpFlightPlannerApp : public QMainWindow //, private Ui::HlpFlightPlannerA
     void zoomIn();
     void zoomOut();
 
-  private:
-    static HlpFlightPlannerApp* mInstance;
+  private slots:
+    void mapToolChanged( QgsMapTool *newTool , QgsMapTool* oldTool );
+    void displayMapToolMessage( QString message, QgsMessageBar::MessageLevel level = QgsMessageBar::INFO );
+    void removeMapToolMessage();
 
+  private:
     void initApp();
 
     QgsMapCanvas* mMapCanvas;
@@ -52,6 +56,8 @@ class HlpFlightPlannerApp : public QMainWindow //, private Ui::HlpFlightPlannerA
 
     QgsMapTool* mPanTool;
     QgsMapTool* mAddProfileTool;
+
+    QgsMessageBarItem* mLastMapToolMessage;
 
 };
 

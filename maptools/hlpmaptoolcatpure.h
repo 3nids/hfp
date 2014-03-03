@@ -35,7 +35,6 @@ class HlpMapToolCapture : public HlpMapToolEdit
 
   public slots:
     void addError( QgsGeometry::Error );
-    void validationFinished();
 
   protected:
     /**Adds a point to the rubber band (in map coordinates) and to the capture list (in layer coordinates)

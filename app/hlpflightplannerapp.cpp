@@ -22,8 +22,6 @@
 #include "ui_hlpflightplannerapp.h"
 
 
-HlpFlightPlannerApp *HlpFlightPlannerApp::mInstance = 0;
-
 HlpFlightPlannerApp::~HlpFlightPlannerApp()
 {
   QgsApplication::exitQgis();
@@ -47,7 +45,6 @@ HlpFlightPlannerApp::HlpFlightPlannerApp(QWidget *parent) :
   ui->setupUi(this);
 
   initApp();
-  mInstance = this;
 
   // test
 //  QgsRasterLayer *mypLayer = new QgsRasterLayer( "/home/denis/Documents/cpp/hfp/hfp/data/cn1244.png", "cn1244");
@@ -86,6 +83,8 @@ void HlpFlightPlannerApp::initApp()
   mMapCanvas->setCanvasColor( QColor( 255, 255, 255 ) );
   mMapCanvas->setWheelAction( QgsMapCanvas::WheelZoomToMouseCursor, 2 );
   centralLayout->addWidget( mMapCanvas, 0, 0, 2, 1 );
+  connect( mMapCanvas, SIGNAL( mapToolSet( QgsMapTool *, QgsMapTool * ) ),
+           this, SLOT( mapToolChanged( QgsMapTool *, QgsMapTool * ) ) );
 
   // Message bar
   mInfoBar = new QgsMessageBar( centralWidget );
@@ -155,6 +154,48 @@ void HlpFlightPlannerApp::setLayerSet( bool updateExtent )
     mMapCanvas->zoomToFullExtent();
 }
 
+int HlpFlightPlannerApp::messageTimeout()
+{
+  QSettings settings;
+  return settings.value( "/hlp/messageTimeout", 5 ).toInt();
+}
+
+void HlpFlightPlannerApp::mapToolChanged( QgsMapTool *newTool, QgsMapTool *oldTool )
+{
+  if ( oldTool )
+  {
+    disconnect( oldTool, SIGNAL( displayMessage( QString ) ), this, SLOT( displayMapToolMessage( QString ) ) );
+    disconnect( oldTool, SIGNAL( displayMessage( QString, QgsMessageBar::MessageLevel ) ), this, SLOT( displayMapToolMessage( QString, QgsMessageBar::MessageLevel ) ) );
+    disconnect( oldTool, SIGNAL( removeMessage() ), this, SLOT( removeMapToolMessage() ) );
+  }
+
+  if ( newTool )
+  {
+    connect( newTool, SIGNAL( displayMessage( QString ) ), this, SLOT( displayMapToolMessage( QString ) ) );
+    connect( newTool, SIGNAL( displayMessage( QString, QgsMessageBar::MessageLevel ) ), this, SLOT( displayMapToolMessage( QString, QgsMessageBar::MessageLevel ) ) );
+    connect( newTool, SIGNAL( removeMessage() ), this, SLOT( removeMapToolMessage() ) );
+  }
+}
+
+void HlpFlightPlannerApp::displayMapToolMessage( QString message, QgsMessageBar::MessageLevel level )
+{
+  // remove previous message
+  mInfoBar->popWidget( mLastMapToolMessage );
+
+  QgsMapTool* tool = mMapCanvas->mapTool();
+
+  if ( tool )
+  {
+    mLastMapToolMessage = new QgsMessageBarItem( tool->toolName(), message, level, messageTimeout() );
+    mInfoBar->pushItem( mLastMapToolMessage );
+  }
+}
+
+void HlpFlightPlannerApp::removeMapToolMessage()
+{
+  // remove previous message
+  mInfoBar->popWidget( mLastMapToolMessage );
+}
 
 void HlpFlightPlannerApp::panMode()
 {
